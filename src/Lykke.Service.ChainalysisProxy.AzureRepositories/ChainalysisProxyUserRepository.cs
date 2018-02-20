@@ -27,6 +27,7 @@ namespace Lykke.Service.ChainalysisProxy.AzureRepositories
             {
                 result = new ProxyUser
                 {
+                    PartitionKey = ProxyUser.GetPartitionKey(),
                     LykkeUserId = lykkeUserId,
                     UserId = Guid.NewGuid().ToString()
                 };

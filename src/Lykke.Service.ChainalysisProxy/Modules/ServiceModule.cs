@@ -48,32 +48,20 @@ namespace Lykke.Service.ChainalysisProxy.Modules
             builder.RegisterType<ShutdownManager>()
                 .As<IShutdownManager>();
 
-            LoadRepositories(builder);
+            var proxyUserRepository = new ChainalysisProxyUserRepository(
+                AzureTableStorage<ProxyUser>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
+                    "ProxyUser", _log));
+            builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository).SingleInstance();
 
-            LoadServices(builder);
+            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
+
+            var chaialysisProxyService = new ChainalysisProxyService(proxyUserRepository, riskApiClient, _settings.Nested(x=>x.Services).CurrentValue);
+            builder.RegisterInstance<IChainalysisProxyService>(chaialysisProxyService)
+                .SingleInstance();
 
             builder.Populate(_services);
         }
 
-        private void LoadServices(ContainerBuilder builder)
-        {
-            builder.RegisterInstance(_settings.Nested(x => x.Services));
-
-            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
-
-            builder.RegisterInstance(riskApiClient);
-
-            builder.RegisterType<ChainalysisProxyService>()
-                .As<IChainalysisProxyService>()
-                .SingleInstance();
-        }
-
-        private void LoadRepositories(ContainerBuilder builder)
-        {
-            var proxyUserRepository = new ChainalysisProxyUserRepository(
-                AzureTableStorage<ProxyUser>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
-                    "ProxyUser", _log));
-            builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository);
-        }
+      
     }
 }
