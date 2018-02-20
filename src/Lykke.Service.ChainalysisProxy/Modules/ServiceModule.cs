@@ -1,6 +1,10 @@
 ﻿using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AzureStorage.Tables;
 using Common.Log;
+using Lykke.Service.ChainalysisMock.Client;
+using Lykke.Service.ChainalysisProxy.AzureRepositories;
+using Lykke.Service.ChainalysisProxy.Core.Repositories;
 using Lykke.Service.ChainalysisProxy.Core.Services;
 using Lykke.Service.ChainalysisProxy.Core.Settings.ServiceSettings;
 using Lykke.Service.ChainalysisProxy.Services;
@@ -12,6 +16,7 @@ namespace Lykke.Service.ChainalysisProxy.Modules
     public class ServiceModule : Module
     {
         private readonly IReloadingManager<ChainalysisProxySettings> _settings;
+        private readonly IReloadingManager<DbSettings> _dbSettings;
         private readonly ILog _log;
         // NOTE: you can remove it if you don't need to use IServiceCollection extensions to register service specific dependencies
         private readonly IServiceCollection _services;
@@ -19,6 +24,7 @@ namespace Lykke.Service.ChainalysisProxy.Modules
         public ServiceModule(IReloadingManager<ChainalysisProxySettings> settings, ILog log)
         {
             _settings = settings;
+            _dbSettings = settings.Nested(x => x.Db);
             _log = log;
 
             _services = new ServiceCollection();
@@ -26,11 +32,7 @@ namespace Lykke.Service.ChainalysisProxy.Modules
 
         protected override void Load(ContainerBuilder builder)
         {
-            // TODO: Do not register entire settings in container, pass necessary settings to services which requires them
-            // ex:
-            //  builder.RegisterType<QuotesPublisher>()
-            //      .As<IQuotesPublisher>()
-            //      .WithParameter(TypedParameter.From(_settings.CurrentValue.QuotesPublication))
+           
 
             builder.RegisterInstance(_log)
                 .As<ILog>()
@@ -46,9 +48,32 @@ namespace Lykke.Service.ChainalysisProxy.Modules
             builder.RegisterType<ShutdownManager>()
                 .As<IShutdownManager>();
 
-            // TODO: Add your dependencies here
+            LoadRepositories(builder);
+
+            LoadServices(builder);
 
             builder.Populate(_services);
+        }
+
+        private void LoadServices(ContainerBuilder builder)
+        {
+            builder.RegisterInstance(_settings.Nested(x => x.Services));
+
+            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
+
+            builder.RegisterInstance(riskApiClient);
+
+            builder.RegisterType<ChainalysisProxyService>()
+                .As<IChainalysisProxyService>()
+                .SingleInstance();
+        }
+
+        private void LoadRepositories(ContainerBuilder builder)
+        {
+            var proxyUserRepository = new ChainalysisProxyUserRepository(
+                AzureTableStorage<ProxyUser>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
+                    "ProxyUser", _log));
+            builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository);
         }
     }
 }

@@ -3,5 +3,6 @@
     public class ChainalysisProxySettings
     {
         public DbSettings Db { get; set; }
+        public Services Services { get; set; }
     }
 }

@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <PackageReference Include="Lykke.Common" Version="4.4.2" />
+    <PackageReference Include="Lykke.Service.ChainalysisMock.Client" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
