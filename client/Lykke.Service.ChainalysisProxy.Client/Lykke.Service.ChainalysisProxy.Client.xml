@@ -4,5 +4,713 @@
         <name>Lykke.Service.ChainalysisProxy.Client</name>
     </assembly>
     <members>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClientMapper">
+            <summary>
+            Autorest Client Mapper
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClientMapper.Map(Lykke.Service.ChainalysisProxy.Contracts.NewTransactionModel)">
+            <summary>
+            Map New transaction Model
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClientMapper.Map(Lykke.Service.ChainalysisProxy.Contracts.NewWalletModel)">
+            <summary>
+            Map new Wallet Model
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.BaseUri">
+            <summary>
+            The base URI of the service.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.SerializationSettings">
+            <summary>
+            Gets or sets json serialization settings.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.DeserializationSettings">
+            <summary>
+            Gets or sets json deserialization settings.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.#ctor(System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the ChainalysisProxyAPI class.
+            </summary>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.#ctor(System.Net.Http.HttpClientHandler,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the ChainalysisProxyAPI class.
+            </summary>
+            <param name='rootHandler'>
+            Optional. The http client handler used to handle http transport.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.#ctor(System.Uri,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the ChainalysisProxyAPI class.
+            </summary>
+            <param name='baseUri'>
+            Optional. The base URI of the service.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.#ctor(System.Uri,System.Net.Http.HttpClientHandler,System.Net.Http.DelegatingHandler[])">
+            <summary>
+            Initializes a new instance of the ChainalysisProxyAPI class.
+            </summary>
+            <param name='baseUri'>
+            Optional. The base URI of the service.
+            </param>
+            <param name='rootHandler'>
+            Optional. The http client handler used to handle http transport.
+            </param>
+            <param name='handlers'>
+            Optional. The delegating handlers to add to the http client pipeline.
+            </param>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.Initialize">
+            <summary>
+            Initializes client properties.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.UserByUserIdRegisterPostWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Resigter user for track
+            </summary>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown when a required parameter is null
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.UserByUserIdGetGetWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Get Information about user
+            </summary>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown when a required parameter is null
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.UserByUserIdAddtransactionPostWithHttpMessagesAsync(System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='transaction'>
+            Transaction to be added
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown when a required parameter is null
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.UserByUserIdAddwalletPostWithHttpMessagesAsync(System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='wallet'>
+            Wallet to be added
+            </param>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown when a required parameter is null
+            </exception>
+            <exception cref="T:System.ArgumentNullException">
+            Thrown when a required parameter is null
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='customHeaders'>
+            Headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+            <exception cref="T:Microsoft.Rest.HttpOperationException">
+            Thrown when the operation returned an invalid status code
+            </exception>
+            <exception cref="T:Microsoft.Rest.SerializationException">
+            Thrown when unable to deserialize the response
+            </exception>
+            <return>
+            A response object containing the response body and response headers.
+            </return>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions">
+            <summary>
+            Extension methods for ChainalysisProxyAPI.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdRegisterPost(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String)">
+            <summary>
+            Resigter user for track
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdRegisterPostAsync(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Resigter user for track
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdGetGet(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String)">
+            <summary>
+            Get Information about user
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdGetGetAsync(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,System.Threading.CancellationToken)">
+            <summary>
+            Get Information about user
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdAddtransactionPost(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='transaction'>
+            Transaction to be added
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdAddtransactionPostAsync(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='transaction'>
+            Transaction to be added
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdAddwalletPost(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='wallet'>
+            Wallet to be added
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.UserByUserIdAddwalletPostAsync(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel,System.Threading.CancellationToken)">
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='wallet'>
+            Wallet to be added
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.IsAlive(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.ChainalysisProxyAPIExtensions.IsAliveAsync(Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI,System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='operations'>
+            The operations group for this extension method.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.BaseUri">
+            <summary>
+            The base URI of the service.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.SerializationSettings">
+            <summary>
+            Gets or sets json serialization settings.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.DeserializationSettings">
+            <summary>
+            Gets or sets json deserialization settings.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.UserByUserIdRegisterPostWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Resigter user for track
+            </summary>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.UserByUserIdGetGetWithHttpMessagesAsync(System.String,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Get Information about user
+            </summary>
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.UserByUserIdAddtransactionPostWithHttpMessagesAsync(System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='transaction'>
+            Transaction to be added
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.UserByUserIdAddwalletPostWithHttpMessagesAsync(System.String,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel,System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <param name='userId'>
+            Lykke user Id (won't be use for Chainalisys)
+            </param>
+            <param name='wallet'>
+            Wallet to be added
+            </param>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.IChainalysisProxyAPI.IsAliveWithHttpMessagesAsync(System.Collections.Generic.Dictionary{System.String,System.Collections.Generic.List{System.String}},System.Threading.CancellationToken)">
+            <summary>
+            Checks service is alive
+            </summary>
+            <param name='customHeaders'>
+            The headers that will be added to request.
+            </param>
+            <param name='cancellationToken'>
+            The cancellation token.
+            </param>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.ErrorResponse.#ctor">
+            <summary>
+            Initializes a new instance of the ErrorResponse class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.ErrorResponse.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.Collections.Generic.IList{System.String}})">
+            <summary>
+            Initializes a new instance of the ErrorResponse class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.ErrorResponse.ErrorMessage">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.ErrorResponse.ModelErrors">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.#ctor">
+            <summary>
+            Initializes a new instance of the IExposureDetails class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.String)">
+            <summary>
+            Initializes a new instance of the IExposureDetails class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.Category">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.SentIndirectExposure">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.SentDirectExposure">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.ReceivedIndirectExposure">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.ReceivedDirectExposure">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.#ctor">
+            <summary>
+            Initializes a new instance of the IsAliveResponse class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.#ctor(System.Boolean,System.String,System.String,System.String,System.Collections.Generic.IList{Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IssueIndicator})">
+            <summary>
+            Initializes a new instance of the IsAliveResponse class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.Name">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.Version">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.Env">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.IsDebug">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.IssueIndicators">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IsAliveResponse.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IssueIndicator.#ctor">
+            <summary>
+            Initializes a new instance of the IssueIndicator class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IssueIndicator.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the IssueIndicator class.
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IssueIndicator.Type">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IssueIndicator.Value">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.#ctor">
+            <summary>
+            Initializes a new instance of the IUserScoreDetails class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.#ctor(System.DateTime,System.String,System.String,System.Nullable{System.DateTime},System.Nullable{Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.RiskScore},System.Nullable{System.DateTime},System.Collections.Generic.IList{Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IExposureDetails})">
+            <summary>
+            Initializes a new instance of the IUserScoreDetails class.
+            </summary>
+            <param name="score">Possible values include: 'Red', 'Amber',
+            'Green'</param>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.UserId">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.CreationDate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.Comment">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.LastActivity">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.Score">
+            <summary>
+            Gets or sets possible values include: 'Red', 'Amber', 'Green'
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.ScoreUpdatedDate">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.ExposureDetails">
+            <summary>
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.IUserScoreDetails.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.#ctor">
+            <summary>
+            Initializes a new instance of the NewTransactionModel class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.#ctor(System.Int32,Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.TransactionType,System.String)">
+            <summary>
+            Initializes a new instance of the NewTransactionModel class.
+            </summary>
+            <param name="transactionType">Possible values include: 'Reseived',
+            'Sent'</param>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.Transaction">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.Output">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.TransactionType">
+            <summary>
+            Gets or sets possible values include: 'Reseived', 'Sent'
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel.#ctor">
+            <summary>
+            Initializes a new instance of the NewWalletModel class.
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel.#ctor(Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.WalletType,System.String)">
+            <summary>
+            Initializes a new instance of the NewWalletModel class.
+            </summary>
+            <param name="walletType">Possible values include: 'Deposit',
+            'Withdrawal'</param>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel.Address">
+            <summary>
+            </summary>
+        </member>
+        <member name="P:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel.WalletType">
+            <summary>
+            Gets or sets possible values include: 'Deposit', 'Withdrawal'
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel.Validate">
+            <summary>
+            Validate the object.
+            </summary>
+            <exception cref="T:Microsoft.Rest.ValidationException">
+            Thrown if validation fails
+            </exception>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.RiskScore">
+            <summary>
+            Defines values for RiskScore.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.TransactionType">
+            <summary>
+            Defines values for TransactionType.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.WalletType">
+            <summary>
+            Defines values for WalletType.
+            </summary>
+        </member>
+        <member name="T:Lykke.Service.ChainalysisProxy.Client.IChainalysisProxyClient">
+            <summary>
+            Chainalysis Proxy Client 
+            </summary>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.IChainalysisProxyClient.RegisterUser(System.String)">
+            <summary>
+            Resigter user for track
+            </summary>
+            <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+            <returns></returns>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.IChainalysisProxyClient.GetUserScore(System.String)">
+            <summary>
+            Get Information about user
+            </summary>
+            <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+            <returns>Information about user</returns>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.IChainalysisProxyClient.AddTransaction(System.String,Lykke.Service.ChainalysisProxy.Contracts.NewTransactionModel)">
+            <summary>
+            
+            </summary>
+            <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+            <param name="transaction">Transaction to be added</param>
+            <returns>Information about user</returns>
+        </member>
+        <member name="M:Lykke.Service.ChainalysisProxy.Client.IChainalysisProxyClient.AddWallet(System.String,Lykke.Service.ChainalysisProxy.Contracts.NewWalletModel)">
+            <summary>
+            
+            </summary>
+            <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+            <param name="wallet">Wallet to be added</param>
+            <returns>Information about user</returns>
+        </member>
     </members>
 </doc>
