@@ -9,23 +9,22 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class IssueIndicator
+    public partial class AddressImportModel
     {
         /// <summary>
-        /// Initializes a new instance of the IssueIndicator class.
+        /// Initializes a new instance of the AddressImportModel class.
         /// </summary>
-        public IssueIndicator()
+        public AddressImportModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the IssueIndicator class.
+        /// Initializes a new instance of the AddressImportModel class.
         /// </summary>
-        public IssueIndicator(string type = default(string), string value = default(string))
+        public AddressImportModel(string address = default(string))
         {
-            Type = type;
-            Value = value;
+            Address = address;
             CustomInit();
         }
 
@@ -36,13 +35,8 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public string Value { get; set; }
+        [JsonProperty(PropertyName = "address")]
+        public string Address { get; set; }
 
     }
 }

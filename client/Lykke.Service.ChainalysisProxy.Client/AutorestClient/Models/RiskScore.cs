@@ -17,11 +17,11 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
     [JsonConverter(typeof(StringEnumConverter))]
     public enum RiskScore
     {
-        [EnumMember(Value = "Red")]
+        [EnumMember(Value = "red")]
         Red,
-        [EnumMember(Value = "Amber")]
+        [EnumMember(Value = "amber")]
         Amber,
-        [EnumMember(Value = "Green")]
+        [EnumMember(Value = "green")]
         Green
     }
     internal static class RiskScoreEnumExtension
@@ -36,11 +36,11 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
             switch( value )
             {
                 case RiskScore.Red:
-                    return "Red";
+                    return "red";
                 case RiskScore.Amber:
-                    return "Amber";
+                    return "amber";
                 case RiskScore.Green:
-                    return "Green";
+                    return "green";
             }
             return null;
         }
@@ -49,11 +49,11 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         {
             switch( value )
             {
-                case "Red":
+                case "red":
                     return RiskScore.Red;
-                case "Amber":
+                case "amber":
                     return RiskScore.Amber;
-                case "Green":
+                case "green":
                     return RiskScore.Green;
             }
             return null;

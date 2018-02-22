@@ -7,27 +7,26 @@
 namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
 {
     using Newtonsoft.Json;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Linq;
 
-    public partial class ErrorResponse
+    public partial class IReceiveOutputInfo
     {
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the IReceiveOutputInfo class.
         /// </summary>
-        public ErrorResponse()
+        public IReceiveOutputInfo()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the ErrorResponse class.
+        /// Initializes a new instance of the IReceiveOutputInfo class.
         /// </summary>
-        public ErrorResponse(string errorMessage = default(string), IDictionary<string, IList<string>> modelErrors = default(IDictionary<string, IList<string>>))
+        public IReceiveOutputInfo(string score = default(string), string name = default(string), string category = default(string))
         {
-            ErrorMessage = errorMessage;
-            ModelErrors = modelErrors;
+            Score = score;
+            Name = name;
+            Category = category;
             CustomInit();
         }
 
@@ -38,13 +37,18 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "errorMessage")]
-        public string ErrorMessage { get; private set; }
+        [JsonProperty(PropertyName = "score")]
+        public string Score { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "modelErrors")]
-        public IDictionary<string, IList<string>> ModelErrors { get; private set; }
+        [JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "category")]
+        public string Category { get; set; }
 
     }
 }
