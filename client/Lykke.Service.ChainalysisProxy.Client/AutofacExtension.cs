@@ -14,10 +14,11 @@ namespace Lykke.Service.ChainalysisProxy.Client
             if (string.IsNullOrWhiteSpace(serviceUrl))
                 throw new ArgumentException("Value cannot be null or whitespace.", nameof(serviceUrl));
 
-            //builder.RegisterType<ChainalysisProxyClient>()
-            //    .WithParameter("serviceUrl", serviceUrl)
-            //    .As<IChainalysisProxyClient>()
-            //    .SingleInstance();
+            builder.RegisterType<ChainalysisProxyClient>()
+                .WithParameter("serviceUrl", serviceUrl)
+                .WithParameter("log", log)
+                .As<IChainalysisProxyClient>()
+                .SingleInstance();
         }
 
         public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, ChainalysisProxyServiceClientSettings settings, ILog log)
