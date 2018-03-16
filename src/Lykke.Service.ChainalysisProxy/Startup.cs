@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
+using AutoMapper;
 using AzureStorage.Tables;
 using Common.Log;
 using Lykke.Common.ApiLibrary.Middleware;
@@ -9,6 +10,7 @@ using Lykke.Common.ApiLibrary.Swagger;
 using Lykke.Logs;
 using Lykke.Service.ChainalysisProxy.Core.Services;
 using Lykke.Service.ChainalysisProxy.Core.Settings;
+using Lykke.Service.ChainalysisProxy.Models;
 using Lykke.Service.ChainalysisProxy.Modules;
 using Lykke.SettingsReader;
 using Lykke.SlackNotification.AzureQueue;
@@ -75,7 +77,13 @@ namespace Lykke.Service.ChainalysisProxy
         {
             try
             {
-                if (env.IsDevelopment())
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.CreateMap<ChainalysisProxy.Contracts.NewTransactionModel, NewTransactionModel>();
+                    cfg.CreateMap<ChainalysisProxy.Contracts.NewWalletModel, NewWalletModel>();
+                });
+
+                    if (env.IsDevelopment())
                 {
                     app.UseDeveloperExceptionPage();
                 }
