@@ -31,13 +31,13 @@ namespace Lykke.Service.ChainalysisProxy.Services
         {
             var user = await _repository.GetUser(userId);
             await _riskApi.ImportUserAsync(new UserImportModel(user), _chainalisisKey);
-            return await GetUserScopeDetails(user);
+            return await GetUserScopeDetails(user, userId);
         }
 
         public async Task<IUserScoreDetails> GetUserScore(string userId)
         {
             var user = await _repository.GetUser(userId);
-            return await GetUserScopeDetails(user);
+            return await GetUserScopeDetails(user, userId);
         }
 
         public async Task<IUserScoreDetails> AddTransaction(string userId, INewTransactionModel transaction)
@@ -52,7 +52,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
                 await _riskApi.AddOutputsSentAsync(user, new OutputImportModel($"{transaction.Transaction}:{transaction.Output}"), _chainalisisKey);
             }
             
-            return await GetUserScopeDetails(user);
+            return await GetUserScopeDetails(user, userId);
         }
 
         public async Task<IUserScoreDetails> AddWallet(string userId, INewWalletModel wallet)
@@ -66,7 +66,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
             {
                 await _riskApi.AddAddressesWithdrawalAsync(user, new AddressImportModel(wallet.Address), _chainalisisKey);
             }
-            return await GetUserScopeDetails(user);
+            return await GetUserScopeDetails(user, userId);
         }
 
         /// <summary>
@@ -74,10 +74,10 @@ namespace Lykke.Service.ChainalysisProxy.Services
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>
-        private async Task<IUserScoreDetails> GetUserScopeDetails(string userId)
+        private async Task<IUserScoreDetails> GetUserScopeDetails(string userId, string origUserId)
         {
             var result = await _riskApi.GetUserAsync(userId, _chainalisisKey);
-            return new UserScoreDetails(result);
+            return new UserScoreDetails(result, origUserId);
         }
     }
 }

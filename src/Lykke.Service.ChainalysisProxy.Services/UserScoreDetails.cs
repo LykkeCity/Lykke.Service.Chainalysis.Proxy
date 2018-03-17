@@ -9,13 +9,13 @@ namespace Lykke.Service.ChainalysisProxy.Services
 {
     internal class UserScoreDetails : IUserScoreDetails
     {
-        public UserScoreDetails(UserDetailsModel result)
+        public UserScoreDetails(UserDetailsModel result, string userId)
         {
             CreationDate = result.CreationDate.ToDateTime();
             Comment = result.Comment;
             LastActivity = result.LastActivity == 0 ? null : (DateTime?)result.LastActivity.ToDateTime();
             RiskScore riskScore;
-            if(!Enum.TryParse(result.Score, out riskScore))
+            if(!Enum.TryParse(result.Score, true, out riskScore))
             {
                 Score = null;
             }
@@ -30,6 +30,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
                 ExposureDetails.AddRange(from ed in result.ExposureDetails
                                          select new ExposureDetails(ed));
             }
+            UserId = userId;
         }
 
         public string UserId { get; set; }
