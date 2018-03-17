@@ -22,11 +22,14 @@ namespace Lykke.Service.ChainalysisProxy.Client
                 .SingleInstance();
         }
 
-        public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, ChainalysisProxyServiceClientSettings settings, ILog log, IMapperConfigurationExpression mapperCfg)
+        public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, ChainalysisProxyServiceClientSettings settings, ILog log)
         {
-            mapperCfg.CreateMap<AutorestClient.Models.NewTransactionModel, Contracts.NewTransactionModel>();
-            mapperCfg.CreateMap<AutorestClient.Models.NewWalletModel, Contracts.NewWalletModel>();
-            mapperCfg.CreateMap<AutorestClient.Models.IUserScoreDetails, Contracts.UserScoreDetails>();
+            //Mapper.Initialize(cfg=>{
+            //});
+            
+            //mapperCfg.CreateMap<AutorestClient.Models.NewTransactionModel, Contracts.NewTransactionModel>();
+            //mapperCfg.CreateMap<AutorestClient.Models.NewWalletModel, Contracts.NewWalletModel>();
+            //mapperCfg.CreateMap<AutorestClient.Models.IUserScoreDetails, Contracts.UserScoreDetails>();
             
             builder.RegisterChainalysisProxyClient(settings?.ServiceUrl, log);
         }
