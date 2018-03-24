@@ -1,6 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Lykke.Service.ChainalysisProxy.Contracts;
+using AutoMapper;
 using Lykke.Service.ChainalysisProxy.Core.Domain;
+using Lykke.Service.ChainalysisProxy.Core.Services;
+using Lykke.Service.ChainalysisProxy.Models;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -9,16 +11,23 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
     [Route("api/chainalysis")]
     public class ChainalysisController : Controller
     {
+        private readonly IChainalysisProxyService _service;
+
+        public ChainalysisController(IChainalysisProxyService service)
+        {
+            _service = service;
+        }
         /// <summary>
         /// Resigter user for track
         /// </summary>
         /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
         /// <returns></returns>
         [HttpPost("/user/{userId}/register")]
-        [SwaggerResponse(200, typeof(object), "Successful response")]
+        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
         public async Task<IActionResult> RegisterUser(string userId)
         {
-            return Ok();
+            var result = await _service.RegisterUser(userId);
+            return Ok(result);
         }
 
         /// <summary>
@@ -28,10 +37,10 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <returns>Information about user</returns>
         [HttpGet("/user/{userId}/get")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        [SwaggerResponse(404, typeof(object), "User not found")]
         public async Task<IActionResult> GetUserScore(string userId)
         {
-            return Ok();
+            var result = await _service.GetUserScore(userId);
+            return Ok(result);
         }
 
         /// <summary>
@@ -42,11 +51,11 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <returns>Information about user</returns>
         [HttpPost("/user/{userId}/addtransaction")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        [SwaggerResponse(404, typeof(object), "User not found")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> AddTransaction(string userId, [FromBody] NewTransactionModel transaction)
+        public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
         {
-            return Ok();
+            var result = await _service.AddTransaction(userId, Mapper.Map<NewTransactionModel>(transaction));
+            return Ok(result);
         }
 
         /// <summary>
@@ -57,11 +66,11 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <returns>Information about user</returns>
         [HttpPost("/user/{userId}/addwallet")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        [SwaggerResponse(404, typeof(object), "User not found")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> AddWallet(string userId, [FromBody] NewWalletModel wallet)
+        public async Task<IActionResult> AddWallet(string userId, [FromBody] ChainalysisProxy.Contracts.NewWalletModel wallet)
         {
-            return Ok();
+            var result = await _service.AddWallet(userId, Mapper.Map<NewWalletModel>(wallet));
+            return Ok(result);
         }
     }
 }

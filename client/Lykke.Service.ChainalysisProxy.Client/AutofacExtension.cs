@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using AutoMapper;
 using Common.Log;
 
 namespace Lykke.Service.ChainalysisProxy.Client
@@ -16,12 +17,20 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
             builder.RegisterType<ChainalysisProxyClient>()
                 .WithParameter("serviceUrl", serviceUrl)
+                .WithParameter("log", log)
                 .As<IChainalysisProxyClient>()
                 .SingleInstance();
         }
 
         public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, ChainalysisProxyServiceClientSettings settings, ILog log)
         {
+            //Mapper.Initialize(cfg=>{
+            //});
+            
+            //mapperCfg.CreateMap<AutorestClient.Models.NewTransactionModel, Contracts.NewTransactionModel>();
+            //mapperCfg.CreateMap<AutorestClient.Models.NewWalletModel, Contracts.NewWalletModel>();
+            //mapperCfg.CreateMap<AutorestClient.Models.IUserScoreDetails, Contracts.UserScoreDetails>();
+            
             builder.RegisterChainalysisProxyClient(settings?.ServiceUrl, log);
         }
     }

@@ -4,11 +4,11 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Lykke.Service.ChainalysisProxy.AzureRepositories</AssemblyName>
     <RootNamespace>Lykke.Service.ChainalysisProxy.AzureRepositories</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lykke.AzureStorage" Version="5.0.0" />
+    <PackageReference Include="Lykke.AzureStorage" Version="7.0.2" />
   </ItemGroup>
 
   <ItemGroup>
