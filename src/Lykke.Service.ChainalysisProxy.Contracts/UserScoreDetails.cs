@@ -12,6 +12,6 @@ namespace Lykke.Service.ChainalysisProxy.Contracts
         public DateTime? LastActivity { get; set; }
         public RiskScore? Score { get; set; }
         public DateTime? ScoreUpdatedDate { get; set; }
-        public List<ExposureDetails> ExposureDetails { get; set; }
+        public IReadOnlyCollection<ExposureDetails> ExposureDetails { get; set; }
     }
 }
