@@ -7,7 +7,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Settings.ServiceSettings
 {
     public class Services
     {
-        [HttpCheck("/swagger/ui")]
+
         public string CainalisysUrl { get; set; }
         public string CainalisysKey { get; set; }
     }
