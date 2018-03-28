@@ -13,21 +13,21 @@
         /// <summary>
         /// Funds Sent Indirectly
         /// </summary>
-        int SentIndirectExposure { get; set; }
+        long SentIndirectExposure { get; set; }
 
         /// <summary>
         /// Funds Sent Directly
         /// </summary>
-        int SentDirectExposure { get; set; }
+        long SentDirectExposure { get; set; }
 
         /// <summary>
         /// Funds Received Indirectly
         /// </summary>
-        int ReceivedIndirectExposure { get; set; }
+        long ReceivedIndirectExposure { get; set; }
 
         /// <summary>
         /// Funds Received Directly
         /// </summary>
-        int ReceivedDirectExposure { get; set; }
+        long ReceivedDirectExposure { get; set; }
     }
 }
