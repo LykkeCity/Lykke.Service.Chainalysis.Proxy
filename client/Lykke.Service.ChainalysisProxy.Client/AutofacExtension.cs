@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-using AutoMapper;
 using Common.Log;
 
 namespace Lykke.Service.ChainalysisProxy.Client

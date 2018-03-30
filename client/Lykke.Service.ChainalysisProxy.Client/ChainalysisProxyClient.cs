@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Common.Log;
 using Lykke.Service.ChainalysisProxy.Client.AutorestClient;
 using Lykke.Service.ChainalysisProxy.Contracts;
@@ -47,7 +48,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdRegisterPostWithHttpMessagesAsync(userId);
             if (result.Response.IsSuccessStatusCode)
             {
-                return Mapper.Map<UserScoreDetails>(result.Body);
+                return MapUserScoreDetails(result.Body);
             }
 
             return null;
@@ -64,7 +65,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdGetGetWithHttpMessagesAsync(userId);
             if (result.Response.IsSuccessStatusCode)
             {
-                return Mapper.Map<UserScoreDetails>(result.Body);
+                return MapUserScoreDetails(result.Body);
             }
 
             return null;
@@ -81,7 +82,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
             if (result.Response.IsSuccessStatusCode)
             {
-                return Mapper.Map<UserScoreDetails>(result.Body);
+                return MapUserScoreDetails((AutorestClient.Models.IUserScoreDetails)result.Body);
             }
 
             return null;
@@ -98,10 +99,46 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdAddwalletPostWithHttpMessagesAsync(userId, wallet.Map());
             if (result.Response.IsSuccessStatusCode)
             {
-                return Mapper.Map<UserScoreDetails>(result.Body);
+                return MapUserScoreDetails((AutorestClient.Models.IUserScoreDetails)result.Body);
             }
 
             return null;
+        }
+
+        private UserScoreDetails MapUserScoreDetails(AutorestClient.Models.IUserScoreDetails userDetails)
+        {
+            if(userDetails == null)
+            {
+                return null;
+            }
+
+            var result = new UserScoreDetails
+            {
+                UserId = userDetails.UserId,
+                CreationDate = userDetails.CreationDate,
+                Comment = userDetails.Comment,
+                LastActivity = userDetails.LastActivity,
+                Score = userDetails.Score == null ? (RiskScore?)null : (RiskScore)Enum.Parse(typeof(RiskScore), userDetails.Score.ToString(), true),
+                ScoreUpdatedDate = userDetails.ScoreUpdatedDate,
+                ExposureDetails = userDetails.ExposureDetails == null ? 
+                                             new List<ExposureDetails>() :
+                                             new List<ExposureDetails>(userDetails.ExposureDetails.Select(ex=>MapExposureDetails(ex)))
+            };
+
+
+            return result;
+        }
+
+        private ExposureDetails MapExposureDetails(AutorestClient.Models.IExposureDetails exposureDetails)
+        {
+            return new ExposureDetails
+            {
+                Category = exposureDetails.Category,
+                SentIndirectExposure = exposureDetails.SentIndirectExposure,
+                SentDirectExposure = exposureDetails.SentDirectExposure,
+                ReceivedIndirectExposure = exposureDetails.ReceivedIndirectExposure,
+                ReceivedDirectExposure = exposureDetails.ReceivedDirectExposure
+            };
         }
     }
 }
