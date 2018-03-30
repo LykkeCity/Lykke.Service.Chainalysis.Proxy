@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+
 
 namespace Lykke.Service.ChainalysisProxy.Client
 {
@@ -14,7 +15,14 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns></returns>
         public static AutorestClient.Models.NewTransactionModel Map(this Contracts.NewTransactionModel model)
         {
-            return Mapper.Map<AutorestClient.Models.NewTransactionModel>(model);
+            if(model == null)
+            {
+                return null;
+            }
+            return new AutorestClient.Models.NewTransactionModel(model.Output,
+                                                                 (AutorestClient.Models.TransactionType)Enum.Parse(typeof(AutorestClient.Models.TransactionType), model.TransactionType.ToString(), true),
+                                                                 model.Transaction);
+                
         }
 
 
@@ -25,7 +33,12 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns></returns>
         public static AutorestClient.Models.NewWalletModel Map(this Contracts.NewWalletModel model)
         {
-            return Mapper.Map<AutorestClient.Models.NewWalletModel>(model);
+            if (model == null)
+            {
+                return null;
+            }
+            return new AutorestClient.Models.NewWalletModel((AutorestClient.Models.WalletType)Enum.Parse(typeof(AutorestClient.Models.WalletType), model.WalletType.ToString(), true),
+                                                            model.Address);
         }
 
 
