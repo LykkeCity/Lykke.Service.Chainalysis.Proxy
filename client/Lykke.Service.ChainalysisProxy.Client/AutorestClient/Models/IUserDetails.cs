@@ -24,7 +24,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the IUserDetails class.
         /// </summary>
-        public IUserDetails(int creationDate, int lastActivity, int scoreUpdatedDate, string userId = default(string), string comment = default(string), string score = default(string), IList<IUserExplosureDetails> exposureDetails = default(IList<IUserExplosureDetails>))
+        public IUserDetails(long creationDate, long lastActivity, long scoreUpdatedDate, string userId = default(string), string comment = default(string), string score = default(string), IList<IUserExplosureDetails> exposureDetails = default(IList<IUserExplosureDetails>))
         {
             UserId = userId;
             CreationDate = creationDate;
@@ -49,7 +49,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "creationDate")]
-        public int CreationDate { get; set; }
+        public long CreationDate { get; set; }
 
         /// <summary>
         /// </summary>
@@ -59,7 +59,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "lastActivity")]
-        public int LastActivity { get; set; }
+        public long LastActivity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -69,7 +69,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "scoreUpdatedDate")]
-        public int ScoreUpdatedDate { get; set; }
+        public long ScoreUpdatedDate { get; set; }
 
         /// <summary>
         /// </summary>

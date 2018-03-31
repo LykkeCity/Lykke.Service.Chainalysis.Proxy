@@ -22,7 +22,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the IUserData class.
         /// </summary>
-        public IUserData(int lastActivity, int scoreUpdatedDate, string userId = default(string), string score = default(string))
+        public IUserData(long lastActivity, long scoreUpdatedDate, string userId = default(string), string score = default(string))
         {
             UserId = userId;
             LastActivity = lastActivity;
@@ -44,7 +44,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "lastActivity")]
-        public int LastActivity { get; set; }
+        public long LastActivity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +54,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "scoreUpdatedDate")]
-        public int ScoreUpdatedDate { get; set; }
+        public long ScoreUpdatedDate { get; set; }
 
         /// <summary>
         /// Validate the object.

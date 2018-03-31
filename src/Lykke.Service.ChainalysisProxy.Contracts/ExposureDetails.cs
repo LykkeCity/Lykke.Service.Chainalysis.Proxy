@@ -4,9 +4,9 @@
     {
        
         public string Category { get; set; }
-        public int SentIndirectExposure { get; set; }
-        public int SentDirectExposure { get; set; }
-        public int ReceivedIndirectExposure { get; set; }
-        public int ReceivedDirectExposure { get; set; }
+        public long SentIndirectExposure { get; set; }
+        public long SentDirectExposure { get; set; }
+        public long ReceivedIndirectExposure { get; set; }
+        public long ReceivedDirectExposure { get; set; }
     }
 }
