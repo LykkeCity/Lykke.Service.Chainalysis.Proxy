@@ -22,7 +22,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// Initializes a new instance of the IExposureDetails class.
         /// </summary>
-        public IExposureDetails(int sentIndirectExposure, int sentDirectExposure, int receivedIndirectExposure, int receivedDirectExposure, string category = default(string))
+        public IExposureDetails(long sentIndirectExposure, long sentDirectExposure, long receivedIndirectExposure, long receivedDirectExposure, string category = default(string))
         {
             Category = category;
             SentIndirectExposure = sentIndirectExposure;
@@ -45,22 +45,22 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "SentIndirectExposure")]
-        public int SentIndirectExposure { get; set; }
+        public long SentIndirectExposure { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "SentDirectExposure")]
-        public int SentDirectExposure { get; set; }
+        public long SentDirectExposure { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "ReceivedIndirectExposure")]
-        public int ReceivedIndirectExposure { get; set; }
+        public long ReceivedIndirectExposure { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "ReceivedDirectExposure")]
-        public int ReceivedDirectExposure { get; set; }
+        public long ReceivedDirectExposure { get; set; }
 
         /// <summary>
         /// Validate the object.
