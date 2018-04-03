@@ -492,7 +492,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IUserInfo>> UserGetWithHttpMessagesAsync(string token, int? maxIdleDays = default(int?), RiskScore? score = default(RiskScore?), int? limit = default(int?), int? offset = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IUserInfo>> UserGetWithHttpMessagesAsync(string token, int? maxIdleDays = default(int?), ChainalysisProxy.Contracts.RiskScore? score = default(ChainalysisProxy.Contracts.RiskScore?), int? limit = default(int?), int? offset = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// &lt;p&gt;Import a user with sent and received history.&lt;/p&gt;

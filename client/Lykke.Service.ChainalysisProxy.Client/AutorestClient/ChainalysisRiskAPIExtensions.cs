@@ -6,6 +6,7 @@
 
 namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient
 {
+    using Lykke.Service.ChainalysisProxy.Contracts;
     using Models;
     using System.Threading;
     using System.Threading.Tasks;

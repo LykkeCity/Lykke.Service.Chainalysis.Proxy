@@ -6,6 +6,7 @@
 
 namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient
 {
+    using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Models;
@@ -2075,7 +2076,7 @@ namespace Lykke.Service.ChainalysisProxy.Client.AutorestClient
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IUserInfo>> UserGetWithHttpMessagesAsync(string token, int? maxIdleDays = default(int?), RiskScore? score = default(RiskScore?), int? limit = default(int?), int? offset = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IUserInfo>> UserGetWithHttpMessagesAsync(string token, int? maxIdleDays = default(int?), Contracts.RiskScore? score = default(Contracts.RiskScore?), int? limit = default(int?), int? offset = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (token == null)
             {

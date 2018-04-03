@@ -1,5 +1,5 @@
 ﻿using System;
-
+using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
 
 namespace Lykke.Service.ChainalysisProxy.Client
 {
@@ -13,14 +13,14 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static AutorestClient.Models.NewTransactionModel Map(this Contracts.NewTransactionModel model)
+        public static NewTransactionModel Map(this Contracts.NewTransactionModel model)
         {
             if(model == null)
             {
                 return null;
             }
-            return new AutorestClient.Models.NewTransactionModel(model.Output,
-                                                                 (AutorestClient.Models.TransactionType)Enum.Parse(typeof(AutorestClient.Models.TransactionType), model.TransactionType.ToString(), true),
+            return new NewTransactionModel(model.Output,
+                                                                 (TransactionType)Enum.Parse(typeof(TransactionType), model.TransactionType.ToString(), true),
                                                                  model.Transaction);
                 
         }
@@ -31,13 +31,13 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static AutorestClient.Models.NewWalletModel Map(this Contracts.NewWalletModel model)
+        public static NewWalletModel Map(this Contracts.NewWalletModel model)
         {
             if (model == null)
             {
                 return null;
             }
-            return new AutorestClient.Models.NewWalletModel((AutorestClient.Models.WalletType)Enum.Parse(typeof(AutorestClient.Models.WalletType), model.WalletType.ToString(), true),
+            return new NewWalletModel((WalletType)Enum.Parse(typeof(WalletType), model.WalletType.ToString(), true),
                                                             model.Address);
         }
 

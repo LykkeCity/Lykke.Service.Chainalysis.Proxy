@@ -1,8 +1,7 @@
 ﻿
 using System.Threading.Tasks;
 using Lykke.Service.ChainalysisProxy.Contracts;
-using NewTransactionModel = Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewTransactionModel;
-using NewWalletModel = Lykke.Service.ChainalysisProxy.Client.AutorestClient.Models.NewWalletModel;
+
 
 namespace Lykke.Service.ChainalysisProxy.Client
 {
@@ -43,5 +42,13 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns>Information about user</returns>
 
         Task<UserScoreDetails> AddWallet(string userId, Contracts.NewWalletModel wallet);
+
+        /// <summary>
+        /// Gets the chainalisys identifier.
+        /// </summary>
+        /// <returns>The chainalisys identifier.</returns>
+        /// <param name="userId">User identifier.</param>
+
+        Task<string> GetChainalisysId(string userId);
     }
 }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
+using Lykke.Service.ChainalysisProxy.AutorestClient;
+using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
 using Lykke.Service.ChainalysisProxy.Client.AutorestClient;
 using Lykke.Service.ChainalysisProxy.Contracts;
 
@@ -77,12 +79,12 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="userId"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public async Task<UserScoreDetails> AddTransaction(string userId, NewTransactionModel transaction)
+        public async Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
         {
             var result = await _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails((AutorestClient.Models.IUserScoreDetails)result.Body);
+                return MapUserScoreDetails((IUserScoreDetails)result.Body);
             }
 
             return null;
@@ -94,18 +96,18 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="userId"></param>
         /// <param name="wallet"></param>
         /// <returns></returns>
-        public async Task<UserScoreDetails> AddWallet(string userId, NewWalletModel wallet)
+        public async Task<UserScoreDetails> AddWallet(string userId, Contracts.NewWalletModel wallet)
         {
             var result = await _service.UserByUserIdAddwalletPostWithHttpMessagesAsync(userId, wallet.Map());
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails((AutorestClient.Models.IUserScoreDetails)result.Body);
+                return MapUserScoreDetails((IUserScoreDetails)result.Body);
             }
 
             return null;
         }
 
-        private UserScoreDetails MapUserScoreDetails(AutorestClient.Models.IUserScoreDetails userDetails)
+        private UserScoreDetails MapUserScoreDetails(IUserScoreDetails userDetails)
         {
             if(userDetails == null)
             {
@@ -118,7 +120,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
                 CreationDate = userDetails.CreationDate,
                 Comment = userDetails.Comment,
                 LastActivity = userDetails.LastActivity,
-                Score = userDetails.Score == null ? (RiskScore?)null : (RiskScore)Enum.Parse(typeof(RiskScore), userDetails.Score.ToString(), true),
+                Score = userDetails.Score == null ? (ChainalysisProxy.Contracts.RiskScore?)null : (ChainalysisProxy.Contracts.RiskScore)Enum.Parse(typeof(ChainalysisProxy.Contracts.RiskScore), userDetails.Score.ToString(), true),
                 ScoreUpdatedDate = userDetails.ScoreUpdatedDate,
                 ExposureDetails = userDetails.ExposureDetails == null ? 
                                              new List<ExposureDetails>() :
@@ -129,7 +131,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             return result;
         }
 
-        private ExposureDetails MapExposureDetails(AutorestClient.Models.IExposureDetails exposureDetails)
+        private ExposureDetails MapExposureDetails(                                                                                                                                                                                                                                                                                    IExposureDetails exposureDetails)
         {
             return new ExposureDetails
             {
@@ -140,5 +142,12 @@ namespace Lykke.Service.ChainalysisProxy.Client
                 ReceivedDirectExposure = exposureDetails.ReceivedDirectExposure
             };
         }
+
+        public async Task<string> GetChainalisysId(string userId)
+        {
+            return (await _service.UserByUserIdGetChainalysisIdGetAsync(userId))?.ToString();
+        }
+
+      
     }
 }
