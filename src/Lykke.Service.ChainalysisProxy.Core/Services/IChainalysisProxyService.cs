@@ -16,5 +16,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Services
         Task<IUserScoreDetails> AddTransaction(string userId, INewTransactionModel transaction);
 
         Task<IUserScoreDetails> AddWallet(string userId, INewWalletModel wallet);
+
+        Task<string> GetChainalysisId(string userId);
     }
 }

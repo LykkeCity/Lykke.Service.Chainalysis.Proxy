@@ -61,6 +61,20 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="userId">Lykke user Id </param>
+        /// <returns>Chainalysis user Id</returns>
+        [HttpGet("/user/{userId}/getChainalysisId")]
+        [SwaggerResponse(200, typeof(string), "Successful response")]
+        [SwaggerResponse(400, typeof(object), "Internal error")]
+        public async Task<IActionResult> GetChainalysisId(string userId)
+        {
+            var result = await _service.GetChainalysisId(userId);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
         /// <param name="wallet">Wallet to be added</param>
         /// <returns>Information about user</returns>

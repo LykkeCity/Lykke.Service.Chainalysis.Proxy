@@ -79,5 +79,10 @@ namespace Lykke.Service.ChainalysisProxy.Services
             var result = await _riskApi.GetUserAsync(userId, _chainalisisKey);
             return new UserScoreDetails(result, origUserId);
         }
+
+        public async Task<string> GetChainalysisId(string userId)
+        {
+            return await _repository.GetUser(userId);
+        }
     }
 }
