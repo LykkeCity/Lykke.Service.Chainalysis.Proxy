@@ -143,9 +143,9 @@ namespace Lykke.Service.ChainalysisProxy.Client
             };
         }
 
-        public async Task<string> GetChainalisysId(string userId)
+        public async Task<ChainalisysUserModel> GetChainalisysId(string userId)
         {
-            return (await _service.UserByUserIdGetChainalysisIdGetAsync(userId))?.ToString();
+            return new ChainalisysUserModel { UserId = (await _service.UserByUserIdGetChainalysisIdGetAsync(userId))?.ToString() };
         }
 
       

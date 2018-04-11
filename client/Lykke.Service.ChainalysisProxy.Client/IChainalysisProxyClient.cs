@@ -49,6 +49,6 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns>The chainalisys identifier.</returns>
         /// <param name="userId">User identifier.</param>
 
-        Task<string> GetChainalisysId(string userId);
+        Task<ChainalisysUserModel> GetChainalisysId(string userId);
     }
 }
