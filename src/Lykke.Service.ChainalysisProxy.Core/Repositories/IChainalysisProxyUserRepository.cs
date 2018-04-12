@@ -9,7 +9,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Repositories
         /// </summary>
         /// <param name="lykkeUserId">Lykke user id</param>
         /// <returns></returns>
-        Task<string> GetUser(string lykkeUserId);
+        Task<string> GetUser(string lykkeUserId, bool createIfNotExists = true);
 
     }
 }

@@ -16,14 +16,14 @@ namespace Lykke.Service.ChainalysisProxy.AzureRepositories
             _repository = repository;
         }
 
-        public async Task<string> GetUser(string lykkeUserId)
+        public async Task<string> GetUser(string lykkeUserId, bool createIfNotExists = true)
         {
             if (string.IsNullOrEmpty(lykkeUserId))
             {
                 throw new ArgumentNullException(nameof(lykkeUserId));
             }
             var result = await _repository.GetDataAsync(ProxyUser.GetPartitionKey(), lykkeUserId);
-            if (result == null)
+            if (result == null && createIfNotExists)
             {
                 result = new ProxyUser
                 {
@@ -34,7 +34,7 @@ namespace Lykke.Service.ChainalysisProxy.AzureRepositories
                 await _repository.InsertOrMergeAsync(result);
             }
 
-            return result.UserId;
+            return result?.UserId;
         }
     }
 }

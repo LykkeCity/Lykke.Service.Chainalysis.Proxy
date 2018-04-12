@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Lykke.Service.ChainalysisProxy.Contracts;
 using Lykke.Service.ChainalysisProxy.Core.Domain;
 using Lykke.Service.ChainalysisProxy.Core.Services;
 using Lykke.Service.ChainalysisProxy.Models;
@@ -54,7 +55,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
         {
-            var result = await _service.AddTransaction(userId, Mapper.Map<NewTransactionModel>(transaction));
+            var result = await _service.AddTransaction(userId, Mapper.Map<Models.NewTransactionModel>(transaction));
             return Ok(result);
         }
 
@@ -64,11 +65,11 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <param name="userId">Lykke user Id </param>
         /// <returns>Chainalysis user Id</returns>
         [HttpGet("/user/{userId}/getChainalysisId")]
-        [SwaggerResponse(200, typeof(string), "Successful response")]
+        [SwaggerResponse(200, typeof(ChainalisysUserModel), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
-            var result = await _service.GetChainalysisId(userId);
+            var result = new ChainalisysUserModel { UserId = await _service.GetChainalysisId(userId) };
             return Ok(result);
         }
 
@@ -83,7 +84,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddWallet(string userId, [FromBody] ChainalysisProxy.Contracts.NewWalletModel wallet)
         {
-            var result = await _service.AddWallet(userId, Mapper.Map<NewWalletModel>(wallet));
+            var result = await _service.AddWallet(userId, Mapper.Map<Models.NewWalletModel>(wallet));
             return Ok(result);
         }
     }

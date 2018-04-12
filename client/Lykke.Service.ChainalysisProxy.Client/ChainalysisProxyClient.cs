@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Common.Log;
 using Lykke.Service.ChainalysisProxy.AutorestClient;
 using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
-using Lykke.Service.ChainalysisProxy.Client.AutorestClient;
 using Lykke.Service.ChainalysisProxy.Contracts;
 
 namespace Lykke.Service.ChainalysisProxy.Client
@@ -143,9 +142,9 @@ namespace Lykke.Service.ChainalysisProxy.Client
             };
         }
 
-        public async Task<ChainalisysUserModel> GetChainalisysId(string userId)
+        public async Task<Contracts.ChainalisysUserModel> GetChainalisysId(string userId)
         {
-            return new ChainalisysUserModel { UserId = (await _service.UserByUserIdGetChainalysisIdGetAsync(userId))?.ToString() };
+            return new Contracts.ChainalisysUserModel { UserId = (await _service.UserByUserIdGetChainalysisIdGetAsync(userId))?.ToString() };
         }
 
       

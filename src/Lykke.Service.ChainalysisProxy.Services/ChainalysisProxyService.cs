@@ -82,7 +82,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
 
         public async Task<string> GetChainalysisId(string userId)
         {
-            return await _repository.GetUser(userId);
+            return await _repository.GetUser(userId, false);
         }
     }
 }
