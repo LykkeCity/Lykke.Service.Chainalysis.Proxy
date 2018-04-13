@@ -36,7 +36,11 @@ namespace Lykke.Service.ChainalysisProxy.Services
 
         public async Task<IUserScoreDetails> GetUserScore(string userId)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _repository.GetUser(userId, false);
+            if(user == null)
+            {
+                return null;
+            }
             return await GetUserScopeDetails(user, userId);
         }
 
