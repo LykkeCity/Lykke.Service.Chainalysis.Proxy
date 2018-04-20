@@ -38,9 +38,14 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <returns>Information about user</returns>
         [HttpGet("/user/{userId}/get")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
+        [SwaggerResponse(400, typeof(object), "Not Found")]
         public async Task<IActionResult> GetUserScore(string userId)
         {
             var result = await _service.GetUserScore(userId);
+            if(result == null)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
 
