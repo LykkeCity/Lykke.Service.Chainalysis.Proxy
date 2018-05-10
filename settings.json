@@ -1,1 +1,24 @@
-
+{
+  "ChainalysisProxyService": 
+  {
+    "Db": 
+    {
+      "LogsConnString": "${ChainalysisProxyServiceLogsConnStr}",
+      "DataConnString": "${ChainalysisProxyServiceConnStr}"
+    },
+    "Services": 
+    {
+      "CainalisysUrl": "${ChainalysisProxyServiceUri}",
+      "CainalisysKey": "${ChainalysisProxyServiceKey}"
+    }
+  },
+  "SlackNotifications": 
+  {
+    "AzureQueue": 
+    {
+      "ConnectionString": "${SlackConnString}",
+      "QueueName": "${SlackQueueName}"
+    },
+    "ThrottlingLimitSeconds": "${SlackThrottlingLimitSeconds}"
+  }
+}
