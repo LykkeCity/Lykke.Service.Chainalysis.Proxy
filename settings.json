@@ -3,22 +3,22 @@
   {
     "Db": 
     {
-      "LogsConnString": "${ChainalysisProxyServiceLogsConnStr}",
-      "DataConnString": "${ChainalysisProxyServiceConnStr}"
+      "LogsConnString": "${ChainalysisProxyServiceLogsConnStr}:[Logs, AzureTableStorage]",
+      "DataConnString": "${ChainalysisProxyServiceConnStr}:[AzureTableStorage]"
     },
     "Services": 
     {
-      "CainalisysUrl": "${ChainalysisProxyServiceUri}",
-      "CainalisysKey": "${ChainalysisProxyServiceKey}"
+      "CainalisysUrl": "${ChainalysisProxyServiceUri}:[URL]",
+      "CainalisysKey": "${ChainalysisProxyServiceKey}:[Key]"
     }
   },
   "SlackNotifications": 
   {
     "AzureQueue": 
     {
-      "ConnectionString": "${SlackConnString}",
-      "QueueName": "${SlackQueueName}"
+      "ConnectionString": "${SlackConnString}:[AzureTableStorage]",
+      "QueueName": "${SlackQueueName}:[Name]"
     },
-    "ThrottlingLimitSeconds": "${SlackThrottlingLimitSeconds}"
+    "ThrottlingLimitSeconds": "${SlackThrottlingLimitSeconds}:[Timestamp]"
   }
 }
