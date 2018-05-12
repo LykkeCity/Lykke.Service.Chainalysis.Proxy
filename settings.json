@@ -9,7 +9,7 @@
     "Services": 
     {
       "CainalisysUrl": "${ChainalysisProxyServiceUri}:[URL]",
-      "CainalisysKey": "${ChainalysisProxyServiceKey}:[Key]"
+      "CainalisysKey": "${ChainalysisProxyServiceKey}:[Secret]"
     }
   },
   "SlackNotifications": 
