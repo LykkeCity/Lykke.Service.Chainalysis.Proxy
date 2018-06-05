@@ -69,7 +69,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
         {
-            _log.WriteInfo(nameof(AddTransaction), "Input value", string.Format($"UserId = {userId}, Transaction = {transaction.ToJson()}"));
+            _log.WriteInfo(nameof(AddTransaction), "Input value", string.Format($"UserId = {userId}, Transaction = ") + transaction.ToJson());
             var result = await _service.AddTransaction(userId, Mapper.Map<Models.NewTransactionModel>(transaction));
             _log.WriteInfo(nameof(AddTransaction), "Result", result.ToJson());
             return Ok(result);
