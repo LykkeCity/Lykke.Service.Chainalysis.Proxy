@@ -1,5 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
+using Common;
+using Common.Log;
 using Lykke.Service.ChainalysisProxy.Contracts;
 using Lykke.Service.ChainalysisProxy.Core.Domain;
 using Lykke.Service.ChainalysisProxy.Core.Services;
@@ -13,10 +15,12 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
     public class ChainalysisController : Controller
     {
         private readonly IChainalysisProxyService _service;
+        private readonly ILog _log;
 
-        public ChainalysisController(IChainalysisProxyService service)
+        public ChainalysisController(IChainalysisProxyService service, ILog log)
         {
             _service = service;
+            _log = log;
         }
         /// <summary>
         /// Resigter user for track
@@ -27,7 +31,9 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
         public async Task<IActionResult> RegisterUser(string userId)
         {
+            _log.WriteInfo(nameof(RegisterUser), "Input value", string.Format($"UserId = {userId}"));
             var result = await _service.RegisterUser(userId);
+            _log.WriteInfo(nameof(RegisterUser), "Result", result.ToJson());
             return Ok(result);
         }
 
@@ -41,11 +47,14 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Not Found")]
         public async Task<IActionResult> GetUserScore(string userId)
         {
+            _log.WriteInfo(nameof(GetUserScore), "Input value", string.Format($"UserId = {userId}"));
             var result = await _service.GetUserScore(userId);
             if(result == null)
             {
+                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
                 return BadRequest();
             }
+            _log.WriteInfo(nameof(GetUserScore), "Result", result.ToJson());
             return Ok(result);
         }
 
@@ -60,7 +69,9 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
         {
+            _log.WriteInfo(nameof(AddTransaction), "Input value", string.Format($"UserId = {userId}, Transaction = {transaction.ToJson()}"));
             var result = await _service.AddTransaction(userId, Mapper.Map<Models.NewTransactionModel>(transaction));
+            _log.WriteInfo(nameof(AddTransaction), "Result", result.ToJson());
             return Ok(result);
         }
 
@@ -74,7 +85,9 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
+            _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
             var result = new ChainalisysUserModel { UserId = await _service.GetChainalysisId(userId) };
+            _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
             return Ok(result);
         }
 
@@ -89,7 +102,9 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddWallet(string userId, [FromBody] ChainalysisProxy.Contracts.NewWalletModel wallet)
         {
+            _log.WriteInfo(nameof(AddWallet), "Input value", string.Format($"UserId = {userId}, Wallet = {wallet.ToJson()}"));
             var result = await _service.AddWallet(userId, Mapper.Map<Models.NewWalletModel>(wallet));
+            _log.WriteInfo(nameof(AddWallet), "Result", result.ToJson());
             return Ok(result);
         }
     }
