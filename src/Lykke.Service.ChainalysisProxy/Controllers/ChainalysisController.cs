@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Common;
 using Common.Log;
@@ -19,8 +20,8 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
 
         public ChainalysisController(IChainalysisProxyService service, ILog log)
         {
-            _service = service;
-            _log = log;
+            _service = service ?? throw new ArgumentNullException(nameof(service));
+            _log = log ?? throw new ArgumentNullException(nameof(log));
         }
         /// <summary>
         /// Resigter user for track
