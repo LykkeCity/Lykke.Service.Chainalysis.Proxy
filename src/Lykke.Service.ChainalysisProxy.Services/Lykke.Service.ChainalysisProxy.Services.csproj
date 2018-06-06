@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lykke.Common" Version="6.1.0" />
     <PackageReference Include="Lykke.Service.ChainalysisMock.Client" Version="1.0.4" />
+    <PackageReference Include="Lykke.Common" Version="6.8.4" />
   </ItemGroup>
 
   <ItemGroup>
