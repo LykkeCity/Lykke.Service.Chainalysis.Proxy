@@ -8,8 +8,8 @@ namespace Lykke.Service.ChainalysisProxy.Tests
         [Fact]
         public void TestClient()
         {
-            //var service = new ChainalysisProxyClient("http://chainalisys-integration-proxy.lykke-service.svc.cluster.local", null);
-            //var id = service.GetChainalisysId("test").Result;
+            //var service = new ChainalysisProxyClient("http://Chainalysis-integration-proxy.lykke-service.svc.cluster.local", null);
+            //var id = service.GetChainalysisId("test").Result;
             //Assert.NotNull(id);
         }
     }

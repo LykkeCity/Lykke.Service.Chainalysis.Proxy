@@ -26,7 +26,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <summary>
         /// Resigter user for track
         /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
         /// <returns></returns>
         [HttpPost("/user/{userId}/register")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
@@ -41,7 +41,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <summary>
         /// Get Information about user
         /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
         /// <returns>Information about user</returns>
         [HttpGet("/user/{userId}/get")]
         [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
@@ -62,7 +62,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
         /// <param name="transaction">Transaction to be added</param>
         /// <returns>Information about user</returns>
         [HttpPost("/user/{userId}/addtransaction")]
@@ -82,12 +82,12 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <param name="userId">Lykke user Id </param>
         /// <returns>Chainalysis user Id</returns>
         [HttpGet("/user/{userId}/getChainalysisId")]
-        [SwaggerResponse(200, typeof(ChainalisysUserModel), "Successful response")]
+        [SwaggerResponse(200, typeof(ChainalysisUserModel), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
             _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
-            var result = new ChainalisysUserModel { UserId = await _service.GetChainalysisId(userId) };
+            var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
             _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
             return Ok(result);
         }
@@ -95,7 +95,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalisys)</param>
+        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
         /// <param name="wallet">Wallet to be added</param>
         /// <returns>Information about user</returns>
         [HttpPost("/user/{userId}/addwallet")]
