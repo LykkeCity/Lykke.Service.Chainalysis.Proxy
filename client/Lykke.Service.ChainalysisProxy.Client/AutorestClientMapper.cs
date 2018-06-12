@@ -1,4 +1,4 @@
-﻿/*using System;
+﻿using System;
 using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
 
 namespace Lykke.Service.ChainalysisProxy.Client
@@ -19,9 +19,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             {
                 return null;
             }
-            return new NewTransactionModel(model.Output,
-                                                                 (TransactionType)Enum.Parse(typeof(TransactionType), model.TransactionType.ToString(), true),
-                                                                 model.Transaction);
+            return new NewTransactionModel((TransactionType)Enum.Parse(typeof(TransactionType), model.TransactionType.ToString(), true),model.Transaction, model.Output);
                 
         }
 
@@ -44,4 +42,3 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
     }
 }
-*/
