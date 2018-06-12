@@ -19,9 +19,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             {
                 return null;
             }
-            return new NewTransactionModel(model.Output,
-                                                                 (TransactionType)Enum.Parse(typeof(TransactionType), model.TransactionType.ToString(), true),
-                                                                 model.Transaction);
+            return new NewTransactionModel((TransactionType)Enum.Parse(typeof(TransactionType), model.TransactionType.ToString(), true),model.Transaction, model.Output);
                 
         }
 

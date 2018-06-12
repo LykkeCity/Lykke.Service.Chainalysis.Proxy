@@ -66,7 +66,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdGetGetWithHttpMessagesAsync(userId);
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails(result.Body);
+                return MapUserScoreDetails((IUserScoreDetails)result.Body);
             }
 
             return null;
