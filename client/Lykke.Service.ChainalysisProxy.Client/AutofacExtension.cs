@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Autofac;
 using Common.Log;
 
@@ -34,3 +34,4 @@ namespace Lykke.Service.ChainalysisProxy.Client
         }
     }
 }
+*/

@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
 
 namespace Lykke.Service.ChainalysisProxy.Client
@@ -44,3 +44,4 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
     }
 }
+*/
