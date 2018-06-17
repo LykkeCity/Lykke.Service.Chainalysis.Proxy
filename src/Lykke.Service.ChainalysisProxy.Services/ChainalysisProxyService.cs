@@ -74,7 +74,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
         }
 
         /// <summary>
-        /// userId is chainalisys!!!
+        /// userId is Chainalysis!!!
         /// </summary>
         /// <param name="userId"></param>
         /// <returns></returns>

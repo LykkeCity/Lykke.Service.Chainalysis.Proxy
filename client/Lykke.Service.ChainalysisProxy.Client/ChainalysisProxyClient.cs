@@ -66,7 +66,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = await _service.UserByUserIdGetGetWithHttpMessagesAsync(userId);
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails(result.Body);
+                return MapUserScoreDetails((IUserScoreDetails)result.Body);
             }
 
             return null;
@@ -142,9 +142,9 @@ namespace Lykke.Service.ChainalysisProxy.Client
             };
         }
 
-        public async Task<Contracts.ChainalisysUserModel> GetChainalisysId(string userId)
+        public async Task<Contracts.ChainalysisUserModel> GetChainalysisId(string userId)
         {
-            return new Contracts.ChainalisysUserModel { UserId = ((await _service.UserByUserIdGetChainalysisIdGetAsync(userId)) as ChainalysisProxy.AutorestClient.Models.ChainalisysUserModel)?.UserId };
+            return new Contracts.ChainalysisUserModel { UserId = ((await _service.UserByUserIdGetChainalysisIdGetAsync(userId)) as ChainalysisProxy.AutorestClient.Models.ChainalysisUserModel)?.UserId };
         }
 
       

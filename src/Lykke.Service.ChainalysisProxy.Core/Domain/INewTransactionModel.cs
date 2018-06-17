@@ -3,7 +3,7 @@
     public interface INewTransactionModel
     {
         string Transaction { get; set; }
-        int Output { get; set; }
+        string Output { get; set; }
         TransactionType TransactionType { get; set; }
     }
 }
