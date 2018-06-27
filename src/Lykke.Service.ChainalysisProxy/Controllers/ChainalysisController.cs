@@ -49,13 +49,22 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetUserScore(string userId)
         {
             _log.WriteInfo(nameof(GetUserScore), "Input value", string.Format($"UserId = {userId}"));
-            var result = await _service.GetUserScore(userId);
-            if(result == null)
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
             {
-                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                _log.WriteInfo(nameof(GetUserScore), "Bad request", "");
                 return BadRequest();
             }
+            var result = await _service.GetUserScore(userId);
+            if (result == null)
+            {
+                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                return Ok(string.Empty);
+            }
+
             _log.WriteInfo(nameof(GetUserScore), "Result", result.ToJson());
+
+
             return Ok(result);
         }
 
