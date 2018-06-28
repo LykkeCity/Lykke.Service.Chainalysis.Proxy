@@ -92,21 +92,6 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
             return Ok(result);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <param name="wallet">Wallet to be added</param>
-        /// <returns>Information about user</returns>
-        [HttpPost("/user/{userId}/addwallet")]
-        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> AddWallet(string userId, [FromBody] ChainalysisProxy.Contracts.NewWalletModel wallet)
-        {
-            _log.WriteInfo(nameof(AddWallet), "Input value", string.Format($"UserId = {userId}, Wallet = {wallet.ToJson()}"));
-            var result = await _service.AddWallet(userId, Mapper.Map<Models.NewWalletModel>(wallet));
-            _log.WriteInfo(nameof(AddWallet), "Result", result.ToJson());
-            return Ok(result);
-        }
+
     }
 }
