@@ -49,13 +49,22 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetUserScore(string userId)
         {
             _log.WriteInfo(nameof(GetUserScore), "Input value", string.Format($"UserId = {userId}"));
-            var result = await _service.GetUserScore(userId);
-            if(result == null)
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
             {
-                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                _log.WriteInfo(nameof(GetUserScore), "Bad request", "");
                 return BadRequest();
             }
+            var result = await _service.GetUserScore(userId);
+            if (result == null)
+            {
+                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                return Ok(string.Empty);
+            }
+
             _log.WriteInfo(nameof(GetUserScore), "Result", result.ToJson());
+
+
             return Ok(result);
         }
 
@@ -87,6 +96,12 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
             _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
+            {
+                _log.WriteInfo(nameof(GetChainalysisId), "Bad request", "");
+                return BadRequest();
+            }
             var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
             _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
             return Ok(result);
