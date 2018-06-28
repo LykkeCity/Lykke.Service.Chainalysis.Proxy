@@ -96,6 +96,12 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
             _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
+            {
+                _log.WriteInfo(nameof(GetChainalysisId), "Bad request", "");
+                return BadRequest();
+            }
             var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
             _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
             return Ok(result);
