@@ -58,7 +58,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
             var result = await _service.GetUserScore(userId);
             if (result == null)
             {
-                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                _log.WriteWarning(nameof(GetUserScore), "Result", "Null");
                 return Ok(string.Empty);
             }
 
@@ -99,7 +99,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
             Guid userGuid;
             if (!Guid.TryParse(userId, out userGuid))
             {
-                _log.WriteInfo(nameof(GetChainalysisId), "Bad request", "");
+                _log.WriteWarning(nameof(GetChainalysisId), "Bad request", "");
                 return BadRequest();
             }
             var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
