@@ -34,14 +34,6 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
         Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <param name="wallet">Wallet to be added</param>
-        /// <returns>Information about user</returns>
-
-        Task<UserScoreDetails> AddWallet(string userId, Contracts.NewWalletModel wallet);
 
         /// <summary>
         /// Gets the Chainalysis identifier.

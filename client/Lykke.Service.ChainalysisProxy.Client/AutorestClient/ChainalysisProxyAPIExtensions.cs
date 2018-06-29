@@ -145,40 +145,6 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient
                 }
             }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='userId'>
-            /// Lykke user Id (won't be use for Chainalysis)
-            /// </param>
-            /// <param name='wallet'>
-            /// Wallet to be added
-            /// </param>
-            public static object UserByUserIdAddwalletPost(this IChainalysisProxyAPI operations, string userId, NewWalletModel wallet = default(NewWalletModel))
-            {
-                return operations.UserByUserIdAddwalletPostAsync(userId, wallet).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='userId'>
-            /// Lykke user Id (won't be use for Chainalysis)
-            /// </param>
-            /// <param name='wallet'>
-            /// Wallet to be added
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UserByUserIdAddwalletPostAsync(this IChainalysisProxyAPI operations, string userId, NewWalletModel wallet = default(NewWalletModel), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.UserByUserIdAddwalletPostWithHttpMessagesAsync(userId, wallet, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
             /// <summary>
             /// Checks service is alive
             /// </summary>
