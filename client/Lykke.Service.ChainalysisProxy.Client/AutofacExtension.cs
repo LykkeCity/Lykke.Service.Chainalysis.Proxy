@@ -6,7 +6,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
 {
     public static class AutofacExtension
     {
-        public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, string serviceUrl, ILog log)
+        public static void RegisterChainalysisProxyClient(this ContainerBuilder builder, string serviceUrl, ILog log, int timeout)
         {
             if (builder == null) throw new ArgumentNullException(nameof(builder));
             if (serviceUrl == null) throw new ArgumentNullException(nameof(serviceUrl));
@@ -16,7 +16,8 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
             builder.RegisterType<ChainalysisProxyClient>()
                 .WithParameter("serviceUrl", serviceUrl)
-                .WithParameter("log", log)
+                .WithParameter("log", log) 
+                .WithParameter("timeout", timeout)
                 .As<IChainalysisProxyClient>()
                 .SingleInstance();
         }
@@ -30,7 +31,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             //mapperCfg.CreateMap<AutorestClient.Models.NewWalletModel, Contracts.NewWalletModel>();
             //mapperCfg.CreateMap<AutorestClient.Models.IUserScoreDetails, Contracts.UserScoreDetails>();
             
-            builder.RegisterChainalysisProxyClient(settings?.ServiceUrl, log);
+            builder.RegisterChainalysisProxyClient(settings?.ServiceUrl, log, settings?.Timeout ?? 0);
         }
     }
 }

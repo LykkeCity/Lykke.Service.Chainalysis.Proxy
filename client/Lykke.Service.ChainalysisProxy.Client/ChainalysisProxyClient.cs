@@ -16,16 +16,23 @@ namespace Lykke.Service.ChainalysisProxy.Client
     {
         private readonly ILog _log;
         private IChainalysisProxyAPI _service;
+        private int _timeout;
 
         /// <summary>
         /// Chainalysis Proxy Client
         /// </summary>
         /// <param name="serviceUrl"></param>
         /// <param name="log"></param>
-        public ChainalysisProxyClient(string serviceUrl, ILog log)
+        /// /// <param name="timeout"></param>
+        public ChainalysisProxyClient(string serviceUrl, ILog log, int timeout)
         {
-            _log = log;
+            _log = log ?? throw new ArgumentNullException(nameof(log)); 
+            if(string.IsNullOrEmpty(serviceUrl))
+            {
+                throw new ArgumentNullException(nameof(serviceUrl)); 
+            }
             _service = new ChainalysisProxyAPI(new Uri(serviceUrl));
+            _timeout = timeout;
         }
 
         /// <summary>
@@ -39,6 +46,17 @@ namespace Lykke.Service.ChainalysisProxy.Client
             _service = null;
         }
 
+
+        private async Task<Task> TaskWithDelay(Task task)
+        {
+            if(_timeout > 0)
+            {
+                return await Task.WhenAny(task, Task.Delay(TimeSpan.FromSeconds(_timeout)));
+            }
+
+            return await Task.WhenAny(task);
+        }
+
         /// <summary>
         /// Register User
         /// </summary>
@@ -46,7 +64,16 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns></returns>
         public async Task<UserScoreDetails> RegisterUser(string userId)
         {
-            var result = await _service.UserByUserIdRegisterPostWithHttpMessagesAsync(userId);
+            var task = _service.UserByUserIdRegisterPostWithHttpMessagesAsync(userId);
+            var resTask = await TaskWithDelay(task);
+            if(resTask != task)
+            {
+                _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(RegisterUser), $"Timeout with {userId}");
+                return null;
+            }
+
+            var result = task.Result;
+
             if (result.Response.IsSuccessStatusCode)
             {
                 return MapUserScoreDetails(result.Body);
@@ -63,7 +90,15 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns></returns>
         public async Task<UserScoreDetails> GetUserScore(string userId)
         {
-            var result = await _service.UserByUserIdGetGetWithHttpMessagesAsync(userId);
+            var task = _service.UserByUserIdGetGetWithHttpMessagesAsync(userId);
+            var resTask = await TaskWithDelay(task);
+            if (resTask != task)
+            {
+                _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(GetUserScore), $"Timeout with {userId}");
+                return null;
+            }
+
+            var result = task.Result;
             if (result.Response.IsSuccessStatusCode)
             {
                 return MapUserScoreDetails((IUserScoreDetails)result.Body);
@@ -80,7 +115,15 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <returns></returns>
         public async Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
         {
-            var result = await _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
+            var task =  _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
+            var resTask = await TaskWithDelay(task);
+            if (resTask != task)
+            {
+                _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(AddTransaction), $"Timeout with {transaction.Transaction}");
+                return null;
+            }
+
+            var result = task.Result;
             if (result.Response.IsSuccessStatusCode)
             {
                 return MapUserScoreDetails((IUserScoreDetails)result.Body);
@@ -89,22 +132,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
             return null;
         }
 
-        /// <summary>
-        /// Add Wallet
-        /// </summary>
-        /// <param name="userId"></param>
-        /// <param name="wallet"></param>
-        /// <returns></returns>
-        public async Task<UserScoreDetails> AddWallet(string userId, Contracts.NewWalletModel wallet)
-        {
-            var result = await _service.UserByUserIdAddwalletPostWithHttpMessagesAsync(userId, wallet.Map());
-            if (result.Response.IsSuccessStatusCode)
-            {
-                return MapUserScoreDetails((IUserScoreDetails)result.Body);
-            }
 
-            return null;
-        }
 
         private UserScoreDetails MapUserScoreDetails(IUserScoreDetails userDetails)
         {
@@ -144,7 +172,16 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
         public async Task<Contracts.ChainalysisUserModel> GetChainalysisId(string userId)
         {
-            return new Contracts.ChainalysisUserModel { UserId = ((await _service.UserByUserIdGetChainalysisIdGetAsync(userId)) as ChainalysisProxy.AutorestClient.Models.ChainalysisUserModel)?.UserId };
+            var task =  _service.UserByUserIdGetChainalysisIdGetAsync(userId);
+            var resTask = await TaskWithDelay(task);
+            if (resTask != task)
+            {
+                _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(GetChainalysisId), $"Timeout with {userId}");
+                return null;
+            }
+
+            var result = task.Result;
+            return new Contracts.ChainalysisUserModel { UserId = (result as ChainalysisProxy.AutorestClient.Models.ChainalysisUserModel)?.UserId };
         }
 
       
