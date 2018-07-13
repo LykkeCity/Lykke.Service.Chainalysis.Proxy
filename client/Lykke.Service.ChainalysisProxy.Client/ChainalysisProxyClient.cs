@@ -126,16 +126,15 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = task.Result;
             if (result.Response.IsSuccessStatusCode)
             {
-                return (INewTransactionModel)result.Body;
+                return MapNewTransactionModel((INewTransactionModel)result.Body);
             }
 
             return null;
         }
 
-
         private Contracts.NewTransactionModel MapNewTransactionModel(INewTransactionModel transactionModel)
         {
-            if(userDetails == null)
+            if (transactionModel == null)
             {
                 return null;
             }
@@ -147,7 +146,31 @@ namespace Lykke.Service.ChainalysisProxy.Client
                 TransactionType = (Contracts.TransactionType)Enum.Parse(typeof(Contracts.TransactionType), transactionModel.TransactionType.ToString()),
                 OutName = transactionModel.OutName,
                 OutScore = (transactionModel.OutScore == null ? (Contracts.RiskScore?)null : (Contracts.RiskScore)Enum.Parse(typeof(Contracts.RiskScore), transactionModel.OutScore, true)),
-                outCategory = transactionModel.OutCategory
+                OutCategory = transactionModel.OutCategory
+            };
+
+
+            return result;
+        }
+
+        private UserScoreDetails MapUserScoreDetails(IUserScoreDetails userDetails)
+        {
+            if(userDetails == null)
+            {
+                return null;
+            }
+
+            var result = new UserScoreDetails
+            {
+                UserId = userDetails.UserId,
+                CreationDate = userDetails.CreationDate,
+                Comment = userDetails.Comment,
+                LastActivity = userDetails.LastActivity,
+                Score = userDetails.Score == null ? (ChainalysisProxy.Contracts.RiskScore?)null : (ChainalysisProxy.Contracts.RiskScore)Enum.Parse(typeof(ChainalysisProxy.Contracts.RiskScore), userDetails.Score.ToString(), true),
+                ScoreUpdatedDate = userDetails.ScoreUpdatedDate,
+                ExposureDetails = userDetails.ExposureDetails == null ? 
+                                             new List<ExposureDetails>() :
+                                             new List<ExposureDetails>(userDetails.ExposureDetails.Select(ex=>MapExposureDetails(ex)))
             };
 
 
