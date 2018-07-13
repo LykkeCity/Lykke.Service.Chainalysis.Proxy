@@ -113,7 +113,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="userId"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public async Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
+        public async Task<Contracts.NewTransactionModel> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
         {
             var task =  _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
             var resTask = await TaskWithDelay(task);
@@ -126,32 +126,28 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = task.Result;
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails((IUserScoreDetails)result.Body);
+                return (INewTransactionModel)result.Body;
             }
 
             return null;
         }
 
 
-
-        private UserScoreDetails MapUserScoreDetails(IUserScoreDetails userDetails)
+        private Contracts.NewTransactionModel MapNewTransactionModel(INewTransactionModel transactionModel)
         {
             if(userDetails == null)
             {
                 return null;
             }
 
-            var result = new UserScoreDetails
+            var result = new Contracts.NewTransactionModel
             {
-                UserId = userDetails.UserId,
-                CreationDate = userDetails.CreationDate,
-                Comment = userDetails.Comment,
-                LastActivity = userDetails.LastActivity,
-                Score = userDetails.Score == null ? (ChainalysisProxy.Contracts.RiskScore?)null : (ChainalysisProxy.Contracts.RiskScore)Enum.Parse(typeof(ChainalysisProxy.Contracts.RiskScore), userDetails.Score.ToString(), true),
-                ScoreUpdatedDate = userDetails.ScoreUpdatedDate,
-                ExposureDetails = userDetails.ExposureDetails == null ? 
-                                             new List<ExposureDetails>() :
-                                             new List<ExposureDetails>(userDetails.ExposureDetails.Select(ex=>MapExposureDetails(ex)))
+                Transaction = transactionModel.Transaction,
+                Output = transactionModel.Output,
+                TransactionType = (Contracts.TransactionType)Enum.Parse(typeof(Contracts.TransactionType), transactionModel.TransactionType.ToString()),
+                OutName = transactionModel.OutName,
+                OutScore = (transactionModel.OutScore == null ? (Contracts.RiskScore?)null : (Contracts.RiskScore)Enum.Parse(typeof(Contracts.RiskScore), transactionModel.OutScore, true)),
+                outCategory = transactionModel.OutCategory
             };
 
 

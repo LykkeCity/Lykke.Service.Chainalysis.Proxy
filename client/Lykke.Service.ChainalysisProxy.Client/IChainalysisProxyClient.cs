@@ -30,9 +30,9 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// </summary>
         /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
         /// <param name="transaction">Transaction to be added</param>
-        /// <returns>Information about user</returns>
+        /// <returns>Information about transaction</returns>
 
-        Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction);
+        Task<NewTransactionModel> AddTransaction(string userId, Contracts.NewTransactionModel transaction);
 
 
         /// <summary>
