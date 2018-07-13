@@ -44,19 +44,21 @@ namespace Lykke.Service.ChainalysisProxy.Services
             return await GetUserScopeDetails(user, userId);
         }
 
-        public async Task<IUserScoreDetails> AddTransaction(string userId, INewTransactionModel transaction)
+        public async Task AddTransaction(string userId, INewTransactionModel transaction)
         {
             var user = await _repository.GetUser(userId);
             if (transaction.TransactionType == TransactionType.Reseived)
             {
-                await _riskApi.AddOutputsReceivedAsync(user, new OutputImportModel($"{transaction.Transaction}:{transaction.Output}"), _chainalisisKey);
+                var r = await _riskApi.AddOutputsReceivedAsync(user, new OutputImportModel($"{transaction.Transaction}:{transaction.Output}"), _chainalisisKey);
+                transaction.outName = r.Name;
+                transaction.outScore = r.Score;
+                transaction.outCategory = r.Category;
             }
             else
             {
                 await _riskApi.AddOutputsSentAsync(user, new OutputImportModel($"{transaction.Transaction}:{transaction.Output}"), _chainalisisKey);
             }
-            
-            return await GetUserScopeDetails(user, userId);
+
         }
 
         public async Task<IUserScoreDetails> AddWallet(string userId, INewWalletModel wallet)
