@@ -49,13 +49,22 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetUserScore(string userId)
         {
             _log.WriteInfo(nameof(GetUserScore), "Input value", string.Format($"UserId = {userId}"));
-            var result = await _service.GetUserScore(userId);
-            if(result == null)
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
             {
-                _log.WriteInfo(nameof(GetUserScore), "Result", "Null");
+                _log.WriteInfo(nameof(GetUserScore), "Bad request", "");
                 return BadRequest();
             }
+            var result = await _service.GetUserScore(userId);
+            if (result == null)
+            {
+                _log.WriteWarning(nameof(GetUserScore), "Result", "Null");
+                return Ok(string.Empty);
+            }
+
             _log.WriteInfo(nameof(GetUserScore), "Result", result.ToJson());
+
+
             return Ok(result);
         }
 
@@ -66,14 +75,15 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         /// <param name="transaction">Transaction to be added</param>
         /// <returns>Information about user</returns>
         [HttpPost("/user/{userId}/addtransaction")]
-        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
+        [SwaggerResponse(200, typeof(INewTransactionModel), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
         {
             _log.WriteInfo(nameof(AddTransaction), "Input value", string.Format($"UserId = {userId}, Transaction = ") + transaction.ToJson());
-            var result = await _service.AddTransaction(userId, Mapper.Map<Models.NewTransactionModel>(transaction));
-            _log.WriteInfo(nameof(AddTransaction), "Result", result.ToJson());
-            return Ok(result);
+            var trans = Mapper.Map<Models.NewTransactionModel>(transaction);
+            await _service.AddTransaction(userId, trans);
+            _log.WriteInfo(nameof(AddTransaction), "Result", trans.ToJson());
+            return Ok(trans);
         }
 
         /// <summary>
@@ -87,26 +97,17 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         public async Task<IActionResult> GetChainalysisId(string userId)
         {
             _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
+            Guid userGuid;
+            if (!Guid.TryParse(userId, out userGuid))
+            {
+                _log.WriteWarning(nameof(GetChainalysisId), "Bad request", "");
+                return BadRequest();
+            }
             var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
             _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
             return Ok(result);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <param name="wallet">Wallet to be added</param>
-        /// <returns>Information about user</returns>
-        [HttpPost("/user/{userId}/addwallet")]
-        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> AddWallet(string userId, [FromBody] ChainalysisProxy.Contracts.NewWalletModel wallet)
-        {
-            _log.WriteInfo(nameof(AddWallet), "Input value", string.Format($"UserId = {userId}, Wallet = {wallet.ToJson()}"));
-            var result = await _service.AddWallet(userId, Mapper.Map<Models.NewWalletModel>(wallet));
-            _log.WriteInfo(nameof(AddWallet), "Result", result.ToJson());
-            return Ok(result);
-        }
+
     }
 }
