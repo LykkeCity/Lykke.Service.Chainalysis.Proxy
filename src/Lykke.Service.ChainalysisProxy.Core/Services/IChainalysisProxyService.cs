@@ -1,5 +1,6 @@
 ﻿
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lykke.Service.ChainalysisProxy.Core.Domain;
 
@@ -18,5 +19,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Services
         Task<IUserScoreDetails> AddWallet(string userId, INewWalletModel wallet);
 
         Task<string> GetChainalysisId(string userId);
+
+        Task<IReadOnlyList<ITransactionStatus>> GetTransactionsByClientIdAndWalletAsync(string clientId, string wallet);
     }
 }
