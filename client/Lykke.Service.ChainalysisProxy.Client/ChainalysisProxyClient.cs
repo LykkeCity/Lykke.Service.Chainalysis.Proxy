@@ -113,7 +113,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="userId"></param>
         /// <param name="transaction"></param>
         /// <returns></returns>
-        public async Task<UserScoreDetails> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
+        public async Task<Contracts.NewTransactionModel> AddTransaction(string userId, Contracts.NewTransactionModel transaction)
         {
             var task =  _service.UserByUserIdAddtransactionPostWithHttpMessagesAsync(userId, transaction.Map());
             var resTask = await TaskWithDelay(task);
@@ -126,13 +126,32 @@ namespace Lykke.Service.ChainalysisProxy.Client
             var result = task.Result;
             if (result.Response.IsSuccessStatusCode)
             {
-                return MapUserScoreDetails((IUserScoreDetails)result.Body);
+                return MapNewTransactionModel((INewTransactionModel)result.Body);
             }
 
             return null;
         }
 
+        private Contracts.NewTransactionModel MapNewTransactionModel(INewTransactionModel transactionModel)
+        {
+            if (transactionModel == null)
+            {
+                return null;
+            }
 
+            var result = new Contracts.NewTransactionModel
+            {
+                Transaction = transactionModel.Transaction,
+                Output = transactionModel.Output,
+                TransactionType = (Contracts.TransactionType)Enum.Parse(typeof(Contracts.TransactionType), transactionModel.TransactionType.ToString()),
+                OutName = transactionModel.OutName,
+                OutScore = (transactionModel.OutScore == null ? (Contracts.RiskScore?)null : (Contracts.RiskScore)Enum.Parse(typeof(Contracts.RiskScore), transactionModel.OutScore, true)),
+                OutCategory = transactionModel.OutCategory
+            };
+
+
+            return result;
+        }
 
         private UserScoreDetails MapUserScoreDetails(IUserScoreDetails userDetails)
         {
