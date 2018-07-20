@@ -145,6 +145,36 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='wallet'>
+            /// </param>
+            public static object TransactionByClientIdByClientIdWalletByWalletGet(this IChainalysisProxyAPI operations, string clientId, string wallet)
+            {
+                return operations.TransactionByClientIdByClientIdWalletByWalletGetAsync(clientId, wallet).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='clientId'>
+            /// </param>
+            /// <param name='wallet'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> TransactionByClientIdByClientIdWalletByWalletGetAsync(this IChainalysisProxyAPI operations, string clientId, string wallet, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.TransactionByClientIdByClientIdWalletByWalletGetWithHttpMessagesAsync(clientId, wallet, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Checks service is alive
             /// </summary>
