@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Lykke.Service.ChainalysisMock.Client;
 using Lykke.Service.ChainalysisMock.Client.AutorestClient;
@@ -13,30 +15,33 @@ namespace Lykke.Service.ChainalysisProxy.Services
 {
     public class ChainalysisProxyService : IChainalysisProxyService
     {
-        private readonly IChainalysisProxyUserRepository _repository;
+        private readonly IChainalysisProxyUserRepository _userRepository;
+        private readonly IChainalysisTransactionStatusRepository _transactionRepository;
         private readonly IChainalysisMockClient _riskApi;
         private readonly string _chainalisisKey;
 
         public ChainalysisProxyService(
-            IChainalysisProxyUserRepository repository,
+            IChainalysisProxyUserRepository userRepository,
+            IChainalysisTransactionStatusRepository transactionRepository,
             IChainalysisMockClient riskApi,
             Core.Settings.ServiceSettings.Services services)
         {
-            _repository = repository;
+            _userRepository = userRepository;
             _riskApi = riskApi;
             _chainalisisKey = services.CainalisysKey;
+            _transactionRepository = transactionRepository;
         }
 
         public async Task<IUserScoreDetails> RegisterUser(string userId)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _userRepository.GetUser(userId);
             await _riskApi.ImportUserAsync(new UserImportModel(user), _chainalisisKey);
             return await GetUserScopeDetails(user, userId);
         }
 
         public async Task<IUserScoreDetails> GetUserScore(string userId)
         {
-            var user = await _repository.GetUser(userId, false);
+            var user = await _userRepository.GetUser(userId, false);
             if(user == null)
             {
                 return null;
@@ -46,7 +51,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
 
         public async Task AddTransaction(string userId, INewTransactionModel transaction)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _userRepository.GetUser(userId);
             if (transaction.TransactionType == TransactionType.Reseived)
             {
                 var r = await _riskApi.AddOutputsReceivedAsync(user, new OutputImportModel($"{transaction.Transaction}:{transaction.Output}"), _chainalisisKey);
@@ -63,7 +68,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
 
         public async Task<IUserScoreDetails> AddWallet(string userId, INewWalletModel wallet)
         {
-            var user = await _repository.GetUser(userId);
+            var user = await _userRepository.GetUser(userId);
             if (wallet.WalletType == WalletType.Deposit)
             {
                 await _riskApi.AddAddressesDepositAsync(user, new AddressImportModel(wallet.Address), _chainalisisKey);
@@ -88,7 +93,13 @@ namespace Lykke.Service.ChainalysisProxy.Services
 
         public async Task<string> GetChainalysisId(string userId)
         {
-            return await _repository.GetUser(userId, false);
+            return await _userRepository.GetUser(userId, false);
+        }
+
+        public async Task<IReadOnlyList<ITransactionStatus>> GetTransactionsByClientIdAndWalletAsync(string clientId, string wallet)
+        {
+            var result = await _transactionRepository.GetTransactionsByClientIdAsync(wallet);
+            return result.Where(tr => tr.ClientId.Equals(clientId)).Select(tr=>new TransactionStatus(tr)).ToList();
         }
     }
 }

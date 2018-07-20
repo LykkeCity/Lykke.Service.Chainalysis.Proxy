@@ -53,9 +53,14 @@ namespace Lykke.Service.ChainalysisProxy.Modules
                     "ProxyUser", _log));
             builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository).SingleInstance();
 
+            var proxyTransactionRepository = new ChainalysisTransactionStatusRepository(
+                AzureTableStorage<AzureRepositories.TransactionStatus>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
+                   "ChainalyisTxCach", _log));
+            builder.RegisterInstance<IChainalysisTransactionStatusRepository>(proxyTransactionRepository).SingleInstance();
+
             var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
 
-            var chaialysisProxyService = new ChainalysisProxyService(proxyUserRepository, riskApiClient, _settings.Nested(x=>x.Services).CurrentValue);
+            var chaialysisProxyService = new ChainalysisProxyService(proxyUserRepository, proxyTransactionRepository, riskApiClient, _settings.Nested(x=>x.Services).CurrentValue);
             builder.RegisterInstance<IChainalysisProxyService>(chaialysisProxyService)
                 .SingleInstance();
 

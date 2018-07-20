@@ -1,4 +1,6 @@
 ﻿
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Lykke.Service.ChainalysisProxy.Contracts;
 
@@ -42,5 +44,10 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="userId">User identifier.</param>
 
         Task<ChainalysisUserModel> GetChainalysisId(string userId);
+
+        /// <summary>
+        /// Get transaction by ClientId and WalletAddress.
+        /// </summary>
+        Task<Contracts.TransactionStatusResult> GetTransactionsStatus(Guid clientId, string walletAddress);
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
 using Lykke.Service.ChainalysisProxy.Core.Domain;
 
 namespace Lykke.Service.ChainalysisProxy.Models

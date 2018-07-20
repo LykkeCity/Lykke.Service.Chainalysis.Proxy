@@ -8,7 +8,8 @@ namespace Lykke.Service.ChainalysisProxy.Tests
         [Fact]
         public void TestClient()
         {
-           /* var service = new ChainalysisProxyClient("http://chainalisys-integration-proxy.lykke-service.svc.cluster.local", null);
+            /*var service = new ChainalysisProxyClient("http://chainalisys-integration-proxy.lykke-service.svc.cluster.local", null, 10);
+            var transactions = service.GetTransactionsStatus(new System.Guid("804fdbbf-536d-4169-ab3e-cb69e80241a9"), "2NBhFKJT62Cprg21ZSV4cJsrTuvFJ1FEauD").Result;
             var result = service.AddTransaction("525a0405-3fe9-4c64-b966-0f597891c335", new Contracts.NewTransactionModel
             {
                 TransactionType = Contracts.TransactionType.Reseived,
@@ -16,8 +17,9 @@ namespace Lykke.Service.ChainalysisProxy.Tests
                     Output = "2MsjdADahhYGVoRGmMsqiHUgyd7hP9jm8iF",
             });
             var id = service.GetChainalysisId("test").Result;
-            Assert.NotNull(id);
-            */
+
+            Assert.NotNull(id);*/
+
         }
     }
 

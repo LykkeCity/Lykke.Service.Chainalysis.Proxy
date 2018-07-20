@@ -203,6 +203,36 @@ namespace Lykke.Service.ChainalysisProxy.Client
             return new Contracts.ChainalysisUserModel { UserId = (result as ChainalysisProxy.AutorestClient.Models.ChainalysisUserModel)?.UserId };
         }
 
+        public async Task<Contracts.TransactionStatusResult> GetTransactionsStatus(Guid clientId, string walletAddress)
+        {
+            
+                var task = _service.TransactionByClientIdByClientIdWalletByWalletGetAsync(clientId.ToString(), walletAddress);
+                var resTask = await TaskWithDelay(task);
+                if (resTask != task)
+                {
+                    _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(GetTransactionsStatus), $"Timeout with {clientId} and {walletAddress}");
+                    return null;
+                }
+
+                var result = task.Result;
+                var transaction = result as ChainalysisProxy.AutorestClient.Models.TransactionStatusResult;
+
+
+            return transaction == null ? null : new Contracts.TransactionStatusResult
+            {
+                Transactions = transaction.Transactions.Select(tr => new Contracts.TransactionStatus
+                {
+                    ClientId = tr.ClientId,
+                    TransactionHash = tr.TransactionHash,
+                    OutputNumber = tr.OutputNumber,
+                    TransactionAmount = (decimal)tr.TransactionAmount,
+                    ChainalysisName = tr.ChainalysisName,
+                    ChainalysisRiskScore = (Contracts.RiskScore)(int)tr.ChainalysisRiskScore,
+                    ChainalysisCategory = tr.ChainalysisCategory,
+                    WalletAddress = tr.WalletAddress
+                }).ToList() 
+            } ;
+        }
       
     }
 }
