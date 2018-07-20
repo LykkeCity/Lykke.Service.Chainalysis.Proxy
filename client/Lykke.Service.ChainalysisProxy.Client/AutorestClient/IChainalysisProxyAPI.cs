@@ -87,6 +87,18 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient
         /// </param>
         Task<HttpOperationResponse<object>> UserByUserIdGetChainalysisIdGetWithHttpMessagesAsync(string userId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='clientId'>
+        /// </param>
+        /// <param name='wallet'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> TransactionByClientIdByClientIdWalletByWalletGetWithHttpMessagesAsync(string clientId, string wallet, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <summary>
         /// Checks service is alive
         /// </summary>

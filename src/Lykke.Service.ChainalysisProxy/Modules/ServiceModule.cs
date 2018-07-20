@@ -54,7 +54,7 @@ namespace Lykke.Service.ChainalysisProxy.Modules
             builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository).SingleInstance();
 
             var proxyTransactionRepository = new ChainalysisTransactionStatusRepository(
-                AzureTableStorage<TransactionStatus>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
+                AzureTableStorage<AzureRepositories.TransactionStatus>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
                    "ChainalyisTxCach", _log));
             builder.RegisterInstance<IChainalysisTransactionStatusRepository>(proxyTransactionRepository).SingleInstance();
 

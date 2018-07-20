@@ -99,7 +99,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
         public async Task<IReadOnlyList<ITransactionStatus>> GetTransactionsByClientIdAndWalletAsync(string clientId, string wallet)
         {
             var result = await _transactionRepository.GetTransactionsByClientIdAsync(wallet);
-            return result.Where(tr => tr.ClientId.Equals(clientId)).ToList();
+            return result.Where(tr => tr.ClientId.Equals(clientId)).Select(tr=>new TransactionStatus(tr)).ToList();
         }
     }
 }

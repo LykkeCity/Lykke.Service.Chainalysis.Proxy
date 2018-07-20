@@ -24,11 +24,16 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient.Models
         /// </summary>
         /// <param name="transactionType">Possible values include: 'Reseived',
         /// 'Sent'</param>
-        public NewTransactionModel(TransactionType transactionType, string transaction = default(string), string output = default(string))
+        /// <param name="outScore">Possible values include: 'Red', 'Amber',
+        /// 'Green'</param>
+        public NewTransactionModel(TransactionType transactionType, string transaction = default(string), string output = default(string), string outName = default(string), RiskScore? outScore = default(RiskScore?), string outCategory = default(string))
         {
             Transaction = transaction;
             Output = output;
             TransactionType = transactionType;
+            OutName = outName;
+            OutScore = outScore;
+            OutCategory = outCategory;
             CustomInit();
         }
 
@@ -52,6 +57,22 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient.Models
         /// </summary>
         [JsonProperty(PropertyName = "TransactionType")]
         public TransactionType TransactionType { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "OutName")]
+        public string OutName { get; set; }
+
+        /// <summary>
+        /// Gets or sets possible values include: 'Red', 'Amber', 'Green'
+        /// </summary>
+        [JsonProperty(PropertyName = "OutScore")]
+        public RiskScore? OutScore { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "OutCategory")]
+        public string OutCategory { get; set; }
 
         /// <summary>
         /// Validate the object.
