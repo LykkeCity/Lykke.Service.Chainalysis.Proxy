@@ -48,6 +48,6 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <summary>
         /// Get transaction by ClientId and WalletAddress.
         /// </summary>
-        Task<IReadOnlyList<TransactionStatus>> GetTransactionsStatus(Guid clientId, string walletAddress);
+        Task<Contracts.TransactionStatusResult> GetTransactionsStatus(Guid clientId, string walletAddress);
     }
 }

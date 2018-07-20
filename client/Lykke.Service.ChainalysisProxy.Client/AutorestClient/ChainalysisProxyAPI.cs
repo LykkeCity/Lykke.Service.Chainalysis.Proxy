@@ -863,7 +863,7 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ITransactionStatus>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<TransactionStatusResult>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

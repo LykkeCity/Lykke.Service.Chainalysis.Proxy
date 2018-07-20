@@ -203,10 +203,9 @@ namespace Lykke.Service.ChainalysisProxy.Client
             return new Contracts.ChainalysisUserModel { UserId = (result as ChainalysisProxy.AutorestClient.Models.ChainalysisUserModel)?.UserId };
         }
 
-        public async Task<IReadOnlyList<TransactionStatus>> GetTransactionsStatus(Guid clientId, string walletAddress)
+        public async Task<Contracts.TransactionStatusResult> GetTransactionsStatus(Guid clientId, string walletAddress)
         {
-            try
-            {
+            
                 var task = _service.TransactionByClientIdByClientIdWalletByWalletGetAsync(clientId.ToString(), walletAddress);
                 var resTask = await TaskWithDelay(task);
                 if (resTask != task)
@@ -216,24 +215,23 @@ namespace Lykke.Service.ChainalysisProxy.Client
                 }
 
                 var result = task.Result;
-                var transaction = result as ChainalysisProxy.AutorestClient.Models.ITransactionStatus;
-                return null;
-            }
-            catch(Exception e)
-            {
-                return null;
-            }
+                var transaction = result as ChainalysisProxy.AutorestClient.Models.TransactionStatusResult;
 
-           // return transaction == null ? null :  new Contracts.TransactionStatus { 
-           //     ClientId = transaction.ClientId,
-           //     TransactionHash = transaction.TransactionHash,
-           //     OutputNumber = transaction.OutputNumber,
-           //     TransactionAmount = (decimal)transaction.TransactionAmount,
-           //     ChainalysisName = transaction.ChainalysisName,
-            //    ChainalysisRiskScore = (Contracts.RiskScore)(int)transaction.ChainalysisRiskScore,
-            //    ChainalysisCategory = transaction.ChainalysisCategory,
-           //     WalletAddress = transaction.WalletAddress
-            //};
+
+            return transaction == null ? null : new Contracts.TransactionStatusResult
+            {
+                Transactions = transaction.Transactions.Select(tr => new Contracts.TransactionStatus
+                {
+                    ClientId = tr.ClientId,
+                    TransactionHash = tr.TransactionHash,
+                    OutputNumber = tr.OutputNumber,
+                    TransactionAmount = (decimal)tr.TransactionAmount,
+                    ChainalysisName = tr.ChainalysisName,
+                    ChainalysisRiskScore = (Contracts.RiskScore)(int)tr.ChainalysisRiskScore,
+                    ChainalysisCategory = tr.ChainalysisCategory,
+                    WalletAddress = tr.WalletAddress
+                }).ToList() 
+            } ;
         }
       
     }
