@@ -111,7 +111,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
 
 
         [HttpGet("/transactionByClientId/{clientId}/wallet/{wallet}")]
-        [SwaggerResponse(200, typeof(ITransactionStatus), "Successful response")]
+        [SwaggerResponse(200, typeof(Models.TransactionStatusResult), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
         public async Task<IActionResult> GetTransactionStatus(string clientId, string wallet)
         {
@@ -122,7 +122,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
                 _log.WriteWarning(nameof(GetChainalysisId), "Bad request", "");
                 return BadRequest();
             }
-            var result = await _service.GetTransactionsByClientIdAndWalletAsync(clientId, wallet);
+            var result = new Models.TransactionStatusResult { Transactions = await _service.GetTransactionsByClientIdAndWalletAsync(clientId, wallet) };
             _log.WriteInfo(nameof(GetTransactionStatus), "Result", result.ToJson());
             return Ok(result);
         }

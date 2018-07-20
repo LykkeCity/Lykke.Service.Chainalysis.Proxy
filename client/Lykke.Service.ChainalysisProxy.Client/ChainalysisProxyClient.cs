@@ -26,7 +26,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// /// <param name="timeout"></param>
         public ChainalysisProxyClient(string serviceUrl, ILog log, int timeout)
         {
-            _log = log ?? throw new ArgumentNullException(nameof(log)); 
+            _log = log ;//?? throw new ArgumentNullException(nameof(log)); 
             if(string.IsNullOrEmpty(serviceUrl))
             {
                 throw new ArgumentNullException(nameof(serviceUrl)); 
@@ -205,17 +205,24 @@ namespace Lykke.Service.ChainalysisProxy.Client
 
         public async Task<IReadOnlyList<TransactionStatus>> GetTransactionsStatus(Guid clientId, string walletAddress)
         {
-            var task = _service.TransactionByClientIdByClientIdWalletByWalletGetAsync(clientId.ToString(), walletAddress);
-            var resTask = await TaskWithDelay(task);
-            if (resTask != task)
+            try
             {
-                _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(GetTransactionsStatus), $"Timeout with {clientId} and {walletAddress}");
+                var task = _service.TransactionByClientIdByClientIdWalletByWalletGetAsync(clientId.ToString(), walletAddress);
+                var resTask = await TaskWithDelay(task);
+                if (resTask != task)
+                {
+                    _log.WriteWarning(nameof(ChainalysisProxyClient), nameof(GetTransactionsStatus), $"Timeout with {clientId} and {walletAddress}");
+                    return null;
+                }
+
+                var result = task.Result;
+                var transaction = result as ChainalysisProxy.AutorestClient.Models.ITransactionStatus;
                 return null;
             }
-
-            var result = task.Result;
-            var transaction = result as ChainalysisProxy.AutorestClient.Models.ITransactionStatus;
-            return null;
+            catch(Exception e)
+            {
+                return null;
+            }
 
            // return transaction == null ? null :  new Contracts.TransactionStatus { 
            //     ClientId = transaction.ClientId,
