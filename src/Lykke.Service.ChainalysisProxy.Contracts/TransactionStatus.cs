@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-﻿using System;
-namespace Lykke.Service.ChainalysisProxy.Contracts
-=======
 ﻿namespace Lykke.Service.ChainalysisProxy.Contracts
->>>>>>> feature/LWDEV-8491_Add-new-method-to-provide-information-about-chainalysis-response
 {
     public class TransactionStatus
     {
