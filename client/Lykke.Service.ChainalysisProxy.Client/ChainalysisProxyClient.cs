@@ -26,7 +26,7 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// /// <param name="timeout"></param>
         public ChainalysisProxyClient(string serviceUrl, ILog log, int timeout)
         {
-            _log = log ;//?? throw new ArgumentNullException(nameof(log)); 
+            _log = log ?? throw new ArgumentNullException(nameof(log)); 
             if(string.IsNullOrEmpty(serviceUrl))
             {
                 throw new ArgumentNullException(nameof(serviceUrl)); 
