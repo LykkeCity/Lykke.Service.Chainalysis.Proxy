@@ -26,7 +26,7 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient.Models
         /// </summary>
         /// <param name="score">Possible values include: 'Red', 'Amber',
         /// 'Green'</param>
-        public IUserScoreDetails(System.DateTime creationDate, string userId = default(string), string comment = default(string), System.DateTime? lastActivity = default(System.DateTime?), RiskScore? score = default(RiskScore?), System.DateTime? scoreUpdatedDate = default(System.DateTime?), IList<IExposureDetails> exposureDetails = default(IList<IExposureDetails>))
+        public IUserScoreDetails(System.DateTime creationDate, System.DateTime lastActivity, System.DateTime scoreUpdatedDate, string userId = default(string), string comment = default(string), RiskScore? score = default(RiskScore?), IList<IExposureDetails> exposureDetails = default(IList<IExposureDetails>))
         {
             UserId = userId;
             CreationDate = creationDate;
@@ -61,7 +61,7 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "LastActivity")]
-        public System.DateTime? LastActivity { get; set; }
+        public System.DateTime LastActivity { get; set; }
 
         /// <summary>
         /// Gets or sets possible values include: 'Red', 'Amber', 'Green'
@@ -72,7 +72,7 @@ namespace Lykke.Service.ChainalysisProxy.AutorestClient.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "ScoreUpdatedDate")]
-        public System.DateTime? ScoreUpdatedDate { get; set; }
+        public System.DateTime ScoreUpdatedDate { get; set; }
 
         /// <summary>
         /// </summary>
