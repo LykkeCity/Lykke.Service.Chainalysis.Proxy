@@ -27,7 +27,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Domain
         /// <summary>
         /// The last time the user sent or received value. Only included if the user has sent or received value.
         /// </summary>
-        DateTime? LastActivity { get; set; }
+        DateTime LastActivity { get; set; }
 
         /// <summary>
         /// The risk score of the user. E.g. red, amber, or green. Only included if the user has sent or received value
@@ -37,7 +37,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Domain
         /// <summary>
         ///  The last time the risk score has been updated. Only included if the user has sent or received value.
         /// </summary>
-        DateTime? ScoreUpdatedDate { get; set; }
+        DateTime ScoreUpdatedDate { get; set; }
 
         /// <summary>
         /// Detailed exposure data.Only included if the user has sent or received value.
