@@ -13,7 +13,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
         {
             CreationDate = result.CreationDate.ToDateTime();
             Comment = result.Comment;
-            LastActivity = result.LastActivity == 0 ? null : (DateTime?)result.LastActivity.ToDateTime();
+            LastActivity = result.LastActivity.ToDateTime();
             RiskScore riskScore;
             if(!Enum.TryParse(result.Score, true, out riskScore))
             {
@@ -23,7 +23,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
             {
                 Score = riskScore;
             }
-            ScoreUpdatedDate = result.ScoreUpdatedDate == 0 ? null : (DateTime?)result.ScoreUpdatedDate.ToDateTime();
+            ScoreUpdatedDate = result.ScoreUpdatedDate.ToDateTime();
             ExposureDetails = new List<IExposureDetails>();
             if (result.ExposureDetails != null)
             {
@@ -36,9 +36,9 @@ namespace Lykke.Service.ChainalysisProxy.Services
         public string UserId { get; set; }
         public DateTime CreationDate { get; set; }
         public string Comment { get; set; }
-        public DateTime? LastActivity { get; set; }
+        public DateTime LastActivity { get; set; }
         public RiskScore? Score { get; set; }
-        public DateTime? ScoreUpdatedDate { get; set; }
+        public DateTime ScoreUpdatedDate { get; set; }
         public List<IExposureDetails> ExposureDetails { get; set; }
     }
 }
