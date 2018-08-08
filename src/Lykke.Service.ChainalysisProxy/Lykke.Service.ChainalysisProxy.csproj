@@ -38,8 +38,8 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.1.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="2.1.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="2.4.0" />
-    <PackageReference Include="Lykke.Common" Version="6.8.4" />
     <PackageReference Include="Lykke.Logs" Version="4.3.4" />
+    <PackageReference Include="Lykke.Common" Version="7.0.3" />
   </ItemGroup>
   
   <ItemGroup>
