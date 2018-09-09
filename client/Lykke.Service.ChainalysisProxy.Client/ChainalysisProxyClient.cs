@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Common.Log;
+using Lykke.Common.Log;
 using Lykke.Service.ChainalysisProxy.AutorestClient;
 using Lykke.Service.ChainalysisProxy.AutorestClient.Models;
 using Lykke.Service.ChainalysisProxy.Contracts;
@@ -24,14 +25,36 @@ namespace Lykke.Service.ChainalysisProxy.Client
         /// <param name="serviceUrl"></param>
         /// <param name="log"></param>
         /// /// <param name="timeout"></param>
+        [Obsolete("Please, use the overload which consumes ILogFactory instead.")]
         public ChainalysisProxyClient(string serviceUrl, ILog log, int timeout)
         {
-            _log = log ?? throw new ArgumentNullException(nameof(log)); 
-            if(string.IsNullOrEmpty(serviceUrl))
-            {
-                throw new ArgumentNullException(nameof(serviceUrl)); 
-            }
+            _log = log ?? throw new ArgumentNullException(nameof(log));
+
+            if (string.IsNullOrWhiteSpace(serviceUrl))
+                throw new ArgumentNullException(nameof(serviceUrl));
+
             _service = new ChainalysisProxyAPI(new Uri(serviceUrl));
+
+            _timeout = timeout;
+        }
+
+        /// <summary>
+        /// Chainalysis Proxy Client
+        /// </summary>
+        /// <param name="serviceUrl"></param>
+        /// <param name="logFactory"></param>
+        /// /// <param name="timeout"></param>
+        public ChainalysisProxyClient(string serviceUrl, ILogFactory logFactory, int timeout)
+        {
+            if (logFactory == null)
+                throw new ArgumentNullException(nameof(logFactory));
+            _log = logFactory.CreateLog(this);
+
+            if (string.IsNullOrWhiteSpace(serviceUrl))
+                throw new ArgumentNullException(nameof(serviceUrl));
+
+            _service = new ChainalysisProxyAPI(new Uri(serviceUrl));
+
             _timeout = timeout;
         }
 
