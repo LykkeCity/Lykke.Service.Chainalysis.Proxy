@@ -48,22 +48,21 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         [SwaggerResponse(400, typeof(object), "Not Found")]
         public async Task<IActionResult> GetUserScore(string userId)
         {
-            _log.WriteInfo(nameof(GetUserScore), "Input value", string.Format($"UserId = {userId}"));
-            Guid userGuid;
-            if (!Guid.TryParse(userId, out userGuid))
+            if (!Guid.TryParse(userId, out var userGuid))
             {
-                _log.WriteInfo(nameof(GetUserScore), "Bad request", "");
-                return BadRequest();
+                _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "Bad request: GUID malformed");
+                return BadRequest("User ID malformed");
             }
             var result = await _service.GetUserScore(userId);
             if (result == null)
             {
-                _log.WriteWarning(nameof(GetUserScore), "Result", "Null");
-                return Ok(string.Empty);
+                _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "No such user");
+                return Ok("No such user");
             }
 
-            _log.WriteInfo(nameof(GetUserScore), "Result", result.ToJson());
-
+#if DEBUG
+            _log.WriteInfo(nameof(GetUserScore), result.ToJson(), $"User score fetched for ID {userId}");
+#endif
 
             return Ok(result);
         }
