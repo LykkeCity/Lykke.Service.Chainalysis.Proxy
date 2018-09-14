@@ -57,7 +57,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
             if (result == null)
             {
                 _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "No such user");
-                return Ok("No such user");
+                return Ok();
             }
 
 #if DEBUG
