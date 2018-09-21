@@ -51,7 +51,7 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
             if (!Guid.TryParse(userId, out var userGuid))
             {
                 _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "Bad request: GUID malformed");
-                return BadRequest("User ID malformed");
+                return BadRequest("User ID malformed: must be a valid GUID");
             }
             var result = await _service.GetUserScore(userId);
             if (result == null)
