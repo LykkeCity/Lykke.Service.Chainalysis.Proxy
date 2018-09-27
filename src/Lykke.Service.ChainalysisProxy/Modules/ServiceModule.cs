@@ -1,72 +1,38 @@
 ﻿using Autofac;
-using Autofac.Extensions.DependencyInjection;
 using AzureStorage.Tables;
-using Common.Log;
+using Lykke.Common.Log;
 using Lykke.Service.ChainalysisMock.Client;
 using Lykke.Service.ChainalysisProxy.AzureRepositories;
-using Lykke.Service.ChainalysisProxy.Core.Repositories;
-using Lykke.Service.ChainalysisProxy.Core.Services;
-using Lykke.Service.ChainalysisProxy.Core.Settings.ServiceSettings;
 using Lykke.Service.ChainalysisProxy.Services;
 using Lykke.SettingsReader;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Lykke.Service.ChainalysisProxy.Modules
 {
     public class ServiceModule : Module
     {
-        private readonly IReloadingManager<ChainalysisProxySettings> _settings;
-        private readonly IReloadingManager<DbSettings> _dbSettings;
-        private readonly ILog _log;
-        // NOTE: you can remove it if you don't need to use IServiceCollection extensions to register service specific dependencies
-        private readonly IServiceCollection _services;
-
-        public ServiceModule(IReloadingManager<ChainalysisProxySettings> settings, ILog log)
+        private readonly IReloadingManager<AppSettings> _settings;
+        
+        public ServiceModule(IReloadingManager<AppSettings> settings)
         {
             _settings = settings;
-            _dbSettings = settings.Nested(x => x.Db);
-            _log = log;
-
-            _services = new ServiceCollection();
         }
 
         protected override void Load(ContainerBuilder builder)
         {
-           
+            builder.RegisterType<ChainalysisTransactionStatusRepository>().As<IChainalysisTransactionStatusRepository>().SingleInstance();
 
-            builder.RegisterInstance(_log)
-                .As<ILog>()
-                .SingleInstance();
+            builder.Register(ctx => AzureTableStorage<ProxyUser>.Create(
+                _settings.Nested(x => x.ChainalysisProxyService.Db).ConnectionString(x => x.DataConnString),
+                "ProxyUser",
+                ctx.Resolve<ILogFactory>())).SingleInstance();
 
-            builder.RegisterType<HealthService>()
-                .As<IHealthService>()
-                .SingleInstance();
-
-            builder.RegisterType<StartupManager>()
-                .As<IStartupManager>();
-
-            builder.RegisterType<ShutdownManager>()
-                .As<IShutdownManager>();
-
-            var proxyUserRepository = new ChainalysisProxyUserRepository(
-                AzureTableStorage<ProxyUser>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
-                    "ProxyUser", _log));
-            builder.RegisterInstance<IChainalysisProxyUserRepository>(proxyUserRepository).SingleInstance();
-
-            var proxyTransactionRepository = new ChainalysisTransactionStatusRepository(
-                AzureTableStorage<AzureRepositories.TransactionStatus>.Create(_dbSettings.ConnectionString(x => x.DataConnString),
-                   "ChainalyisTxCach", _log));
-            builder.RegisterInstance<IChainalysisTransactionStatusRepository>(proxyTransactionRepository).SingleInstance();
-
-            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
-
-            var chaialysisProxyService = new ChainalysisProxyService(proxyUserRepository, proxyTransactionRepository, riskApiClient, _settings.Nested(x=>x.Services).CurrentValue);
-            builder.RegisterInstance<IChainalysisProxyService>(chaialysisProxyService)
-                .SingleInstance();
-
-            builder.Populate(_services);
+            builder.Register(ctx => AzureTableStorage<TransactionStatusEntity>.Create(
+                _settings.Nested(x => x.ChainalysisProxyService.Db).ConnectionString(x => x.DataConnString),
+                "ChainalyisTxCach", 
+                ctx.Resolve<ILogFactory>()));
+            
+            builder.Register(ctx => new ChainalysisMockClient(_settings.Nested(x => x.ChainalysisProxyService.Chainalysis.ChainalysisUrl).CurrentValue)).As<IChainalysisMockClient>().SingleInstance();
+            builder.RegisterType<ChainalysisProxyService>().As<IChainalysisProxyService>().WithParameter("chainalysisKey", _settings.CurrentValue.ChainalysisProxyService.Chainalysis.ChainalysisKey);
         }
-
-      
     }
 }

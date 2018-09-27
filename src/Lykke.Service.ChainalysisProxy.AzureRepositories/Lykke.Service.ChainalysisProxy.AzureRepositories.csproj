@@ -11,8 +11,4 @@
     <PackageReference Include="Lykke.AzureStorage" Version="8.10.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lykke.Service.ChainalysisProxy.Core\Lykke.Service.ChainalysisProxy.Core.csproj" />
-  </ItemGroup>
-
 </Project>

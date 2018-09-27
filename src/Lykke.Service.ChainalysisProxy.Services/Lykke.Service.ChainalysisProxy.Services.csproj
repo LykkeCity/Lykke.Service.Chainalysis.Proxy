@@ -9,11 +9,18 @@
 
   <ItemGroup>
     <PackageReference Include="Lykke.Service.ChainalysisMock.Client" Version="1.0.4" />
-    <PackageReference Include="Lykke.Common" Version="7.0.3" />
+    <PackageReference Include="Lykke.Common" Version="7.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lykke.Service.ChainalysisProxy.Core\Lykke.Service.ChainalysisProxy.Core.csproj" />
+    <ProjectReference Include="..\Lykke.Service.ChainalysisProxy.AzureRepositories\Lykke.Service.ChainalysisProxy.AzureRepositories.csproj" />
+    <ProjectReference Include="..\Lykke.Service.ChainalysisProxy.Contracts\Lykke.Service.ChainalysisProxy.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="IChainalysisProxyService.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 
 </Project>

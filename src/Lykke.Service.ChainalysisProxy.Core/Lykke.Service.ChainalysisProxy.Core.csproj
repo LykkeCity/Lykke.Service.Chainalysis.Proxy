@@ -12,10 +12,4 @@
     <PackageReference Include="Lykke.Common" Version="7.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Services\IChainalysisProxyService.cs">
-      <SubType>Form</SubType>
-    </Compile>
-  </ItemGroup>
-
 </Project>

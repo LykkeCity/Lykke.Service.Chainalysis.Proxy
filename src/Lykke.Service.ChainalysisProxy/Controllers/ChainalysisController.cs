@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoMapper;
 using Common;
 using Common.Log;
+using Lykke.Common.Log;
 using Lykke.Service.ChainalysisProxy.Contracts;
-using Lykke.Service.ChainalysisProxy.Core.Domain;
-using Lykke.Service.ChainalysisProxy.Core.Services;
-using Lykke.Service.ChainalysisProxy.Models;
+using Lykke.Service.ChainalysisProxy.Services;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -18,114 +16,38 @@ namespace Lykke.Service.ChainalysisProxy.Controllers
         private readonly IChainalysisProxyService _service;
         private readonly ILog _log;
 
-        public ChainalysisController(IChainalysisProxyService service, ILog log)
+        public ChainalysisController(IChainalysisProxyService service, ILogFactory log)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
-            _log = log ?? throw new ArgumentNullException(nameof(log));
+            _log = log.CreateLog(this) ?? throw new ArgumentNullException(nameof(log));
         }
-        /// <summary>
-        /// Resigter user for track
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <returns></returns>
-        [HttpPost("/user/{userId}/register")]
-        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
-        public async Task<IActionResult> RegisterUser(string userId)
-        {
-            _log.WriteInfo(nameof(RegisterUser), "Input value", string.Format($"UserId = {userId}"));
-            var result = await _service.RegisterUser(userId);
-            _log.WriteInfo(nameof(RegisterUser), "Result", result.ToJson());
-            return Ok(result);
-        }
-
-        /// <summary>
-        /// Get Information about user
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <returns>Information about user</returns>
+        
         [HttpGet("/user/{userId}/get")]
-        [SwaggerResponse(200, typeof(IUserScoreDetails), "Successful response")]
+        [SwaggerResponse(200, typeof(UserScoreDetails), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Not Found")]
-        public async Task<IActionResult> GetUserScore(string userId)
+        public async Task<IActionResult> GetUserScore(Guid userId)
         {
-            if (!Guid.TryParse(userId, out var userGuid))
-            {
-                _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "Bad request: GUID malformed");
-                return BadRequest("User ID malformed: must be a valid GUID");
-            }
             var result = await _service.GetUserScore(userId);
+
             if (result == null)
-            {
-                _log.WriteInfo(nameof(GetUserScore), $"User ID: {userId}", "No such user");
-                return Ok();
-            }
+                return NotFound();
 
 #if DEBUG
-            _log.WriteInfo(nameof(GetUserScore), result.ToJson(), $"User score fetched for ID {userId}");
+            _log.Info(nameof(GetUserScore), result.ToJson(), $"User score fetched for ID {userId}");
 #endif
 
             return Ok(result);
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId">Lykke user Id (won't be use for Chainalysis)</param>
-        /// <param name="transaction">Transaction to be added</param>
-        /// <returns>Information about user</returns>
-        [HttpPost("/user/{userId}/addtransaction")]
-        [SwaggerResponse(200, typeof(INewTransactionModel), "Successful response")]
-        [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> AddTransaction(string userId, [FromBody]   ChainalysisProxy.Contracts.NewTransactionModel transaction)
-        {
-            _log.WriteInfo(nameof(AddTransaction), "Input value", string.Format($"UserId = {userId}, Transaction = ") + transaction.ToJson());
-            var trans = Mapper.Map<Models.NewTransactionModel>(transaction);
-            await _service.AddTransaction(userId, trans);
-            _log.WriteInfo(nameof(AddTransaction), "Result", trans.ToJson());
-            return Ok(trans);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="userId">Lykke user Id </param>
-        /// <returns>Chainalysis user Id</returns>
-        [HttpGet("/user/{userId}/getChainalysisId")]
-        [SwaggerResponse(200, typeof(ChainalysisUserModel), "Successful response")]
-        [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> GetChainalysisId(string userId)
-        {
-            _log.WriteInfo(nameof(GetChainalysisId), "Input value", string.Format($"UserId = {userId}"));
-            Guid userGuid;
-            if (!Guid.TryParse(userId, out userGuid))
-            {
-                _log.WriteWarning(nameof(GetChainalysisId), "Bad request", "");
-                return BadRequest();
-            }
-            var result = new ChainalysisUserModel { UserId = await _service.GetChainalysisId(userId) };
-            _log.WriteInfo(nameof(GetChainalysisId), "Result", result.ToJson());
-            return Ok(result);
-        }
-
-
+        
 
         [HttpGet("/transactionByClientId/{clientId}/wallet/{wallet}")]
-        [SwaggerResponse(200, typeof(Models.TransactionStatusResult), "Successful response")]
+        [SwaggerResponse(200, typeof(TransactionStatusResult), "Successful response")]
         [SwaggerResponse(400, typeof(object), "Internal error")]
-        public async Task<IActionResult> GetTransactionStatus(string clientId, string wallet)
+        public async Task<IActionResult> GetTransactionStatus(Guid clientId, Guid wallet)
         {
-            _log.WriteInfo(nameof(GetTransactionStatus), "Input value", string.Format($"clientId = {clientId}, wallet = {wallet}"));
-            Guid clientGuidId;
-            if (!Guid.TryParse(clientId, out clientGuidId))
-            {
-                _log.WriteWarning(nameof(GetChainalysisId), "Bad request", "");
-                return BadRequest();
-            }
-            var result = new Models.TransactionStatusResult { Transactions = await _service.GetTransactionsByClientIdAndWalletAsync(clientId, wallet) };
-            _log.WriteInfo(nameof(GetTransactionStatus), "Result", result.ToJson());
+            var result = new TransactionStatusResult { Transactions = await _service.GetTransactionsByClientIdAndWalletAsync(clientId, wallet) };
+            
             return Ok(result);
         }
-
-
     }
 }

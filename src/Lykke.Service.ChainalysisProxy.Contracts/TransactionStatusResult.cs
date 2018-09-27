@@ -4,6 +4,6 @@ namespace Lykke.Service.ChainalysisProxy.Contracts
 {
     public class TransactionStatusResult
     {
-        public List<TransactionStatus> Transactions { get; set; }
+        public IEnumerable<TransactionStatus> Transactions { get; set; }
     }
 }
