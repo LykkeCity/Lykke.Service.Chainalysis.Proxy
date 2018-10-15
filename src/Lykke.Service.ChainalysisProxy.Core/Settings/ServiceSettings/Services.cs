@@ -8,7 +8,7 @@ namespace Lykke.Service.ChainalysisProxy.Core.Settings.ServiceSettings
     public class Services
     {
 
-        public string CainalisysUrl { get; set; }
-        public string CainalisysKey { get; set; }
+        public string ChainalisysUrl { get; set; }
+        public string ChainalisysKey { get; set; }
     }
 }
