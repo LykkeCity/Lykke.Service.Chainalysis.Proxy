@@ -58,7 +58,7 @@ namespace Lykke.Service.ChainalysisProxy.Modules
                    "ChainalyisTxCach", _log));
             builder.RegisterInstance<IChainalysisTransactionStatusRepository>(proxyTransactionRepository).SingleInstance();
 
-            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.CainalisysUrl).CurrentValue);
+            var riskApiClient = new ChainalysisMockClient(_settings.Nested(x => x.Services.ChainalysisUrl).CurrentValue);
 
             var chaialysisProxyService = new ChainalysisProxyService(proxyUserRepository, proxyTransactionRepository, riskApiClient, _settings.Nested(x=>x.Services).CurrentValue);
             builder.RegisterInstance<IChainalysisProxyService>(chaialysisProxyService)

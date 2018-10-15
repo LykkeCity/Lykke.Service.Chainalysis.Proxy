@@ -28,7 +28,7 @@ namespace Lykke.Service.ChainalysisProxy.Services
         {
             _userRepository = userRepository;
             _riskApi = riskApi;
-            _chainalisisKey = services.CainalisysKey;
+            _chainalisisKey = services.ChainalysisKey;
             _transactionRepository = transactionRepository;
         }
 
